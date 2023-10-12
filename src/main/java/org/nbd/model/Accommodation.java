@@ -1,9 +1,20 @@
 package org.nbd.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table
 public class Accommodation {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
+    @Column
     private final double capacity;
+    @Column
     private final double pricePerPerson;
+    @Column
     private int rating;
+    @Column
     private final String destination;
 
     public Accommodation(double capacity, double pricePerPerson, int rating, String destination) {

@@ -7,7 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccommodationManager {
-    private AccommodationRepo accommodationRepo = new AccommodationRepo();
+    private AccommodationRepo accommodationRepo;
+
+    public AccommodationManager(AccommodationRepo accommodationRepo) {
+        this.accommodationRepo = accommodationRepo;
+    }
 
     public Accommodation getByIndex(int index)
     {
@@ -26,7 +30,8 @@ public class AccommodationManager {
         {
             throw new Exception("incorrect rating");
         }
-        return this.accommodationRepo.add(new Accommodation(capacity, pricePerPerson, rating, destination));
+        Accommodation accommodation = new Accommodation(capacity, pricePerPerson, rating, destination);
+        return this.accommodationRepo.add(accommodation);
     }
     public List<Accommodation> getAll()
     {

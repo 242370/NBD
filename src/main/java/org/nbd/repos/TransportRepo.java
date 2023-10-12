@@ -1,11 +1,14 @@
 package org.nbd.repos;
 
+import jakarta.persistence.EntityManager;
 import org.nbd.model.TransportMean;
 
 import java.util.ArrayList;
 
 public class TransportRepo {
     private ArrayList<TransportMean> transportMeans = new ArrayList<>();
+
+    EntityManager entityManager;
 
     public boolean add(TransportMean transportMean)
     {

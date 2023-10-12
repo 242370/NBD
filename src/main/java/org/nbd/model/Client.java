@@ -1,13 +1,29 @@
 package org.nbd.model;
 
-import java.util.ArrayList;
+import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
 public class Client {
-    private String firstName;
-    private String lastName;
-    private int weight;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int ID;
+    @Column
+    private final String firstName;
+    @Column
+    private final String lastName;
+    @Column
+    private final int weight;
+    @Column
     private boolean hasPet = false;
-    private ArrayList<Pet> pets;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn
+    @Fetch(FetchMode.JOIN)
+    private List<Pet> pets = new ArrayList<>();
 
     public Client(String firstName, String lastName, int weight) {
         this.firstName = firstName;
@@ -27,7 +43,7 @@ public class Client {
         return weight;
     }
 
-    public boolean isHasPet() {
+    public boolean hasPet() {
         return hasPet;
     }
 

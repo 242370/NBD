@@ -10,7 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TripManager {
-    private TripRepo tripRepo = new TripRepo();
+    private TripRepo tripRepo;
+
+    public TripManager(TripRepo tripRepo) {
+        this.tripRepo = tripRepo;
+    }
 
     public Trip getByIndex(int index) {
         Trip trip = null;

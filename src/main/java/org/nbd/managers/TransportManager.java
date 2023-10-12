@@ -21,21 +21,21 @@ public class TransportManager {
         return accommodation;
     }
 
-    public boolean addJet(int maxWeight, int ID)
+    public boolean addJet(int maxWeight)
     {
-        Jet jet = new Jet(maxWeight, ID);
+        Jet jet = new Jet(maxWeight);
         return transportRepo.add(jet);
     }
 
-    public boolean addScooter(int maxWeight, int ID)
+    public boolean addScooter(int maxWeight)
     {
-        Scooter jet = new Scooter(maxWeight, ID);
+        Scooter jet = new Scooter(maxWeight);
         return transportRepo.add(jet);
     }
 
-    public boolean addLift(int maxWeight, int ID)
+    public boolean addLift(int maxWeight)
     {
-        Lift jet = new Lift(maxWeight, ID);
+        Lift jet = new Lift(maxWeight);
         return transportRepo.add(jet);
     }
     public List<TransportMean> getAll()

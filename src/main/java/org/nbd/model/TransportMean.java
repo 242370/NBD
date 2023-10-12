@@ -1,14 +1,28 @@
 package org.nbd.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "type")
 public abstract class TransportMean {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID")
+    private int ID;
+
+    @Column
     private boolean isAvailable = true;
+
+    @Column
     private final int maxWeight;
-    private final int ID;
+
+    @Column(insertable = false)
+    private String type;
 
 
-    public TransportMean(int maxWeight, int ID) {
+    public TransportMean(int maxWeight) {
         this.maxWeight = maxWeight;
-        this.ID = ID;
     }
 
     public boolean isAvailable() {
@@ -28,4 +42,6 @@ public abstract class TransportMean {
     }
 
     public abstract boolean isPetSupportive();
+
+    public abstract String getType();
 }

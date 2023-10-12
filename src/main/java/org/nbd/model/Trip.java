@@ -1,10 +1,20 @@
 package org.nbd.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 import java.util.ArrayList;
 
 public class Trip {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column
     private final int length ;
+    @Column
     private final String name ;
+    @Column
     private int actualWeight = 0 ;
     ArrayList<Client> clients = new ArrayList<>();
     TransportMean transportMean;

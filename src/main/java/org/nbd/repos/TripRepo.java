@@ -1,14 +1,28 @@
 package org.nbd.repos;
 
+import jakarta.persistence.EntityManager;
 import org.nbd.model.Trip;
 
 import java.util.ArrayList;
 
 public class TripRepo {
     private ArrayList<Trip> trips = new ArrayList<>();
+    EntityManager entityManager;
+
+    public TripRepo(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 
     public boolean add(Trip trip)
     {
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(trip);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            System.out.println(e.getMessage());
+        }
         return trips.add(trip);
     }
     public Trip getByIndex(int index) throws Exception
