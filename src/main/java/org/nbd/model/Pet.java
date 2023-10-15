@@ -2,16 +2,13 @@ package org.nbd.model;
 
 import jakarta.persistence.*;
 
-@Entity
+
 public class Pet {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int ID;
-    @Column
+
     private final String name;
-    @Column
+
     private final String species;
-    @Column
+
     private final int weight;
 
     public Pet(String name, String species, int weight) {

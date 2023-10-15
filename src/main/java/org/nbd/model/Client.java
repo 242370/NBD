@@ -7,22 +7,17 @@ import org.hibernate.annotations.FetchMode;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+
 public class Client {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int ID;
-    @Column
+
     private final String firstName;
-    @Column
+
     private final String lastName;
-    @Column
+
     private final int weight;
-    @Column
+
     private boolean hasPet = false;
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn
-    @Fetch(FetchMode.JOIN)
+
     private List<Pet> pets = new ArrayList<>();
 
     public Client(String firstName, String lastName, int weight) {

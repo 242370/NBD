@@ -1,23 +1,31 @@
 package org.nbd.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.util.ArrayList;
+import java.util.List;
 
+@Entity
+@Table(name = "Trips")
 public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    private int ID;
     @Column
     private final int length ;
     @Column
     private final String name ;
     @Column
     private int actualWeight = 0 ;
-    ArrayList<Client> clients = new ArrayList<>();
+
+    private ArrayList<Client> clients = new ArrayList<>();
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn
     TransportMean transportMean;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn
     Accommodation accommodation;
 
     public Trip(int length, String name, TransportMean transportMean, Accommodation accommodation) {

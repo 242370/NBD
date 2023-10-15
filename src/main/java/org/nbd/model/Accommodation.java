@@ -3,7 +3,7 @@ package org.nbd.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table
+@Table(name = "Accommodations")
 public class Accommodation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type")
+@Table(name = "TransportMeans")
 public abstract class TransportMean {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
