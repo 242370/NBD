@@ -17,7 +17,7 @@ public abstract class TransportMean {
     @Column
     private final int maxWeight;
 
-    @Column(insertable = false)
+    @Column(insertable = false, updatable = false)
     private String type;
 
 

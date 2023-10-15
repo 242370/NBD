@@ -7,13 +7,14 @@ import org.nbd.managers.AccommodationManager;
 import org.nbd.managers.TransportManager;
 import org.nbd.managers.TripManager;
 import org.nbd.repos.AccommodationRepo;
+import org.nbd.repos.TransportRepo;
 import org.nbd.repos.TripRepo;
 
 public class TravelAgency {
     EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("TAVEL-PERSISTENCE");
     EntityManager entityManager = entityManagerFactory.createEntityManager();
     private double account;
-    private final TransportManager transportManager = new TransportManager();
+    private final TransportManager transportManager = new TransportManager(new TransportRepo(entityManager));
     private final AccommodationManager accommodationManager = new AccommodationManager(new AccommodationRepo(entityManager));
     private final TripManager tripManager = new TripManager(new TripRepo(entityManager));
 

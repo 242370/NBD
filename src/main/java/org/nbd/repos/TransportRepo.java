@@ -10,8 +10,20 @@ public class TransportRepo {
 
     EntityManager entityManager;
 
+    public TransportRepo(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+
     public boolean add(TransportMean transportMean)
     {
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(transportMean);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            System.out.println(e.getMessage());
+        }
         return transportMeans.add(transportMean);
     }
     public TransportMean getByIndex(int index) throws Exception

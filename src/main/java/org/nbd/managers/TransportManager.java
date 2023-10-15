@@ -7,7 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TransportManager {
-    private final TransportRepo transportRepo = new TransportRepo();
+    private TransportRepo transportRepo;
+
+    public TransportManager(TransportRepo transportRepo) {
+        this.transportRepo = transportRepo;
+    }
 
     public TransportMean getByIndex(int index)
     {
