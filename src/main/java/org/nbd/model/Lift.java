@@ -1,5 +1,8 @@
 package org.nbd.model;
 
+import jakarta.persistence.Entity;
+
+@Entity
 public class Lift extends TransportMean{
 
     public Lift(int maxWeight) {

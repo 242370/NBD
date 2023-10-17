@@ -1,6 +1,7 @@
 package org.nbd.repos;
 
 import jakarta.persistence.EntityManager;
+import org.nbd.model.Client;
 import org.nbd.model.Trip;
 
 import java.util.ArrayList;
@@ -36,5 +37,20 @@ public class TripRepo {
     public int getSize()
     {
         return trips.size();
+    }
+
+    public void addClientToTrip(Trip trip, Client client)
+    {
+        try {
+            entityManager.getTransaction().begin();
+            trip.addClient(client);
+            entityManager.merge(trip);
+            entityManager.getTransaction().commit();
+        }
+        catch (Exception e)
+        {
+            entityManager.getTransaction().rollback();
+            System.out.println(e.getMessage());
+        }
     }
 }

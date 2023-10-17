@@ -7,18 +7,25 @@ import org.hibernate.annotations.FetchMode;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Entity
+@Table(name = "clients")
 public class Client {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @Column(name = "first_name")
     private final String firstName;
-
+    @Column(name = "last_name")
     private final String lastName;
-
+    @Column
     private final int weight;
 
+    @Column(name = "has_pet")
     private boolean hasPet = false;
 
-    private List<Pet> pets = new ArrayList<>();
+    @Embedded
+    private Pet pet = null;
 
     public Client(String firstName, String lastName, int weight) {
         this.firstName = firstName;
@@ -35,20 +42,20 @@ public class Client {
     }
 
     public int getWeight() {
-        return weight;
+        if(this.hasPet)
+        {
+            return this.weight + this.pet.getPetWeight();
+        }
+        return this.weight;
     }
 
     public boolean hasPet() {
         return hasPet;
     }
 
-    public Pet getPet(int index) {
-        return pets.get(index);
-    }
-
-    public boolean addPet(String name, String species, int weight) {
+    public void addPet(String name, String species, int weight){
         Pet newPet = new Pet(name, species, weight);
         this.hasPet = true;
-        return pets.add(newPet);
+        this.pet = newPet;
     }
 }

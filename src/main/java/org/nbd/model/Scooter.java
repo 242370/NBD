@@ -1,5 +1,8 @@
 package org.nbd.model;
 
+import jakarta.persistence.Entity;
+
+@Entity
 public class Scooter extends TransportMean{
     public Scooter(int maxWeight) {
         super(maxWeight);

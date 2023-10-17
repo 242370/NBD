@@ -4,9 +4,11 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import org.nbd.managers.AccommodationManager;
+import org.nbd.managers.ClientManager;
 import org.nbd.managers.TransportManager;
 import org.nbd.managers.TripManager;
 import org.nbd.repos.AccommodationRepo;
+import org.nbd.repos.ClientRepo;
 import org.nbd.repos.TransportRepo;
 import org.nbd.repos.TripRepo;
 
@@ -17,6 +19,8 @@ public class TravelAgency {
     private final TransportManager transportManager = new TransportManager(new TransportRepo(entityManager));
     private final AccommodationManager accommodationManager = new AccommodationManager(new AccommodationRepo(entityManager));
     private final TripManager tripManager = new TripManager(new TripRepo(entityManager));
+
+    private final ClientManager clientManager = new ClientManager(new ClientRepo(entityManager));
 
     public double getAccount() {
         return account;
@@ -38,9 +42,12 @@ public class TravelAgency {
         return tripManager;
     }
 
-    public boolean addClient(Trip trip, String firstName, String lastName, int weight)
-    {
-        if(this.tripManager.addClient(trip, firstName, lastName, weight))
+    public ClientManager getClientManager() {
+        return clientManager;
+    }
+
+    public boolean addClient(Trip trip, Client client) throws Exception {
+        if(this.tripManager.addClient(trip, client))
         {
             account += trip.getAccommodation().getPricePerPerson();
             return true;

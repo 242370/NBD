@@ -11,7 +11,7 @@ import java.util.List;
 @Table(name = "Trips")
 public class Trip {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
     @Column
     private final int length ;
@@ -20,7 +20,9 @@ public class Trip {
     @Column
     private int actualWeight = 0 ;
 
-    private ArrayList<Client> clients = new ArrayList<>();
+    @OneToMany
+    @JoinColumn
+    private List<Client> clients = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn
     TransportMean transportMean;
@@ -70,16 +72,16 @@ public class Trip {
         return clients.size() * accommodation.getPricePerPerson();
     }
 
-    public boolean addClient(Client customer)
+    public boolean addClient(Client customer) throws Exception
     {
         if(clients.size() + 1 > this.accommodation.getCapacity())
         {
-            return false;
+            throw new Exception("capacity not enough");
         }
 
         if(this.actualWeight + customer.getWeight() > this.transportMean.getMaxWeight())
         {
-            return false;
+            throw new Exception("weight not enough");
         }
         this.actualWeight += customer.getWeight();
         return clients.add(customer);

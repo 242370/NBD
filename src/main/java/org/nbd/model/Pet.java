@@ -1,31 +1,27 @@
 package org.nbd.model;
 
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
-
+@Embeddable
+@Access(AccessType.FIELD)
+@NoArgsConstructor
 public class Pet {
 
-    private final String name;
+    @Column(name = "pet_name")
+    private String petName = null;
 
-    private final String species;
+    private String species = null;
 
-    private final int weight;
+    @Column(name = "pet_weight")
+    private int petWeight = 0;
 
-    public Pet(String name, String species, int weight) {
-        this.name = name;
+    public Pet(String petName, String species, int petWeight) {
+        this.petName = petName;
         this.species = species;
-        this.weight = weight;
+        this.petWeight = petWeight;
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getSpecies() {
-        return species;
-    }
-
-    public int getWeight() {
-        return weight;
+    public int getPetWeight() {
+        return petWeight;
     }
 }

@@ -34,8 +34,8 @@ public class TripManager {
         return tripRepo.add(new Trip(length, name, transportMean, accommodation));
     }
 
-    public boolean addClient(Trip trip, String firstName, String lastName, int weight) {
-        return trip.addClient(new Client(firstName, lastName, weight));
+    public boolean addClient(Trip trip, Client client) throws Exception {
+        return trip.addClient(client);
     }
 
     public boolean addClientWithPet(Trip trip, String firstName, String lastName, int weight, String petName, String petSpecies, int petWeight) {
@@ -56,5 +56,10 @@ public class TripManager {
             }
         }
         return trips;
+    }
+
+    public void addClientToTrip(Client client, Trip trip)
+    {
+        this.tripRepo.addClientToTrip(trip, client);
     }
 }
