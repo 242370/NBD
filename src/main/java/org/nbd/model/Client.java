@@ -1,12 +1,14 @@
 package org.nbd.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 @Entity
 @Table(name = "clients")
 public class Client {
@@ -31,14 +33,6 @@ public class Client {
         this.firstName = firstName;
         this.lastName = lastName;
         this.weight = weight;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
     }
 
     public int getWeight() {

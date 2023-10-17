@@ -20,7 +20,7 @@ public class Trip {
     @Column
     private int actualWeight = 0 ;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn
     private List<Client> clients = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL)

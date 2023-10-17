@@ -43,8 +43,8 @@ public class TripRepo {
     {
         try {
             entityManager.getTransaction().begin();
-            trip.addClient(client);
             entityManager.merge(trip);
+            trip.addClient(client);
             entityManager.getTransaction().commit();
         }
         catch (Exception e)

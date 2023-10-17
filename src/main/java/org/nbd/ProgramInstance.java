@@ -17,7 +17,8 @@ public class ProgramInstance {
             sharkTours.getClientManager().addClient("Rafal", "Cybula", 50);
             sharkTours.getClientManager().addClientWithPet("Adam", "Kruszynski", 50, "Kaczka", "duck", 10);
             sharkTours.getTripManager().addClientToTrip(sharkTours.getClientManager().getByIndex(0), sharkTours.getTripManager().getByIndex(0));
-            sharkTours.getTripManager().addClientToTrip(sharkTours.getClientManager().getByIndex(1), sharkTours.getTripManager().getByIndex(0));
+            sharkTours.getTripManager().addTrip(10, "xD", sharkTours.getTransportManager().getByIndex(1), accommodation);
+            sharkTours.getTripManager().addClientToTrip(sharkTours.getClientManager().getByIndex(1), sharkTours.getTripManager().getByIndex(1));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
