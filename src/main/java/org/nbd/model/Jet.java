@@ -1,6 +1,7 @@
 package org.nbd.model;
 
 import jakarta.persistence.Entity;
+import lombok.NoArgsConstructor;
 
 @Entity
 public class Jet extends TransportMean{

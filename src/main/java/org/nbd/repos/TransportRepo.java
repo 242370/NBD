@@ -2,6 +2,7 @@ package org.nbd.repos;
 
 import jakarta.persistence.EntityManager;
 import org.nbd.model.TransportMean;
+import org.nbd.model.Trip;
 
 import java.util.ArrayList;
 
@@ -26,13 +27,20 @@ public class TransportRepo {
         }
         return transportMeans.add(transportMean);
     }
-    public TransportMean getByIndex(int index) throws Exception
+    public TransportMean getByID(int id)
     {
-        if(index >= transportMeans.size() || index < 0)
-        {
-            throw new Exception("index out of range");
+        TransportMean transportMean = null;
+        try {
+            entityManager.getTransaction().begin();
+            transportMean = entityManager.find(TransportMean.class, id);
+            entityManager.getTransaction().commit();
         }
-        return transportMeans.get(index);
+        catch (Exception e)
+        {
+            entityManager.getTransaction().rollback();
+            System.out.println(e.getMessage());
+        }
+        return transportMean;
     }
     public TransportMean getById(int ID) throws Exception
     {

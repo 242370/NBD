@@ -1,11 +1,13 @@
 package org.nbd.model;
 
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type")
 @Table(name = "Transport_means")
+@NoArgsConstructor
 public abstract class TransportMean {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,7 +18,7 @@ public abstract class TransportMean {
     private boolean isAvailable = true;
 
     @Column
-    private final int maxWeight;
+    private int maxWeight;
 
     @Column(insertable = false, updatable = false)
     private String type;

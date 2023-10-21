@@ -2,6 +2,7 @@ package org.nbd.repos;
 
 import jakarta.persistence.EntityManager;
 import org.nbd.model.Accommodation;
+import org.nbd.model.Trip;
 
 import java.util.ArrayList;
 
@@ -28,13 +29,20 @@ public class AccommodationRepo {
         return accommodations.add(hotel);
     }
 
-    public Accommodation getByIndex(int index) throws Exception
+    public Accommodation getByID(int id)
     {
-        if(index >= accommodations.size() || index < 0)
-        {
-            throw new Exception("index out of range");
+        Accommodation accommodation = null;
+        try {
+            entityManager.getTransaction().begin();
+            accommodation = entityManager.find(Accommodation.class, id);
+            entityManager.getTransaction().commit();
         }
-        return accommodations.get(index);
+        catch (Exception e)
+        {
+            entityManager.getTransaction().rollback();
+            System.out.println(e.getMessage());
+        }
+        return accommodation;
     }
 
     public int getSize()

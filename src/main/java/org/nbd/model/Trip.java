@@ -1,6 +1,7 @@
 package org.nbd.model;
 
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -9,19 +10,20 @@ import java.util.List;
 
 @Entity
 @Table(name = "Trips")
+@NoArgsConstructor
 public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
     @Column
-    private final int length ;
+    private int length;
     @Column
-    private final String name ;
+    private String name;
     @Column
     private int actualWeight = 0 ;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    @JoinColumn
+    @JoinColumn(name = "trip_id")
     private List<Client> clients = new ArrayList<>();
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn

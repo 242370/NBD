@@ -10,16 +10,9 @@ public class ClientManager {
         this.clientRepo = clientRepo;
     }
 
-    public Client getByIndex(int index)
+    public Client getByID(int id)
     {
-        Client client = null;
-        try {
-            client = this.clientRepo.getByIndex(index);
-        } catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
-        return client;
+        return clientRepo.getByID(id);
     }
     public boolean addClient(String firstName, String lastName, int weight) throws Exception
     {

@@ -16,14 +16,8 @@ public class TripManager {
         this.tripRepo = tripRepo;
     }
 
-    public Trip getByIndex(int index) {
-        Trip trip = null;
-        try {
-            trip = this.tripRepo.getByIndex(index);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return trip;
+    public Trip getByID(int id) {
+        return tripRepo.getByID(id);
     }
 
     public boolean addTrip(int length, String name, TransportMean transportMean, Accommodation accommodation) {
@@ -48,7 +42,7 @@ public class TripManager {
         for(int i = 0 ; i < tripRepo.getSize() ; i++)
         {
             try {
-                trips.add(tripRepo.getByIndex(i));
+                trips.add(tripRepo.getByID(i));
             }
             catch (Exception e)
             {

@@ -1,21 +1,23 @@
 package org.nbd.model;
 
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "Accommodations")
+@NoArgsConstructor
 public class Accommodation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column
-    private final double capacity;
+    private double capacity;
     @Column
-    private final double pricePerPerson;
+    private double pricePerPerson;
     @Column
     private int rating;
     @Column
-    private final String destination;
+    private String destination;
 
     public Accommodation(double capacity, double pricePerPerson, int rating, String destination) {
         this.capacity = capacity;

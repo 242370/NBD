@@ -13,16 +13,9 @@ public class AccommodationManager {
         this.accommodationRepo = accommodationRepo;
     }
 
-    public Accommodation getByIndex(int index)
+    public Accommodation getByID(int id)
     {
-        Accommodation accommodation = null;
-        try {
-            accommodation = this.accommodationRepo.getByIndex(index);
-        } catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
-        return accommodation;
+        return accommodationRepo.getByID(id);
     }
     public boolean addPlace(double capacity, double pricePerPerson, int rating, String destination) throws Exception
     {
@@ -39,7 +32,7 @@ public class AccommodationManager {
         for(int i = 0 ; i < this.accommodationRepo.getSize() ; i++)
         {
             try {
-                accommodations.add(this.accommodationRepo.getByIndex(i));
+                accommodations.add(this.accommodationRepo.getByID(i));
             }
             catch (Exception e)
             {

@@ -2,6 +2,7 @@ package org.nbd.repos;
 
 import jakarta.persistence.EntityManager;
 import org.nbd.model.Client;
+import org.nbd.model.Trip;
 
 import java.util.ArrayList;
 
@@ -26,13 +27,20 @@ public class ClientRepo {
         return clients.add(client);
     }
 
-    public Client getByIndex(int index) throws Exception
+    public Client getByID(int id)
     {
-        if(index >= clients.size() || index < 0)
-        {
-            throw new Exception("index out of range");
+        Client client = null;
+        try {
+            entityManager.getTransaction().begin();
+            client = entityManager.find(Client.class, id);
+            entityManager.getTransaction().commit();
         }
-        return clients.get(index);
+        catch (Exception e)
+        {
+            entityManager.getTransaction().rollback();
+            System.out.println(e.getMessage());
+        }
+        return client;
     }
 
     public int getSize()

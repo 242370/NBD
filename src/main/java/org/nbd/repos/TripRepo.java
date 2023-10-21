@@ -26,13 +26,20 @@ public class TripRepo {
         }
         return trips.add(trip);
     }
-    public Trip getByIndex(int index) throws Exception
+    public Trip getByID(int index)
     {
-        if(index >= trips.size() || index < 0)
-        {
-            throw new Exception("index out of range");
+        Trip trip = null;
+        try {
+            entityManager.getTransaction().begin();
+            trip = entityManager.find(Trip.class, index);
+            entityManager.getTransaction().commit();
         }
-        return trips.get(index);
+        catch (Exception e)
+        {
+            entityManager.getTransaction().rollback();
+            System.out.println(e.getMessage());
+        }
+        return trip;
     }
     public int getSize()
     {

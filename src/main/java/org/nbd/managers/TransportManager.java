@@ -13,16 +13,9 @@ public class TransportManager {
         this.transportRepo = transportRepo;
     }
 
-    public TransportMean getByIndex(int index)
+    public TransportMean getByID(int id)
     {
-        TransportMean accommodation = null;
-        try {
-            accommodation = this.transportRepo.getByIndex(index);
-        } catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
-        return accommodation;
+        return transportRepo.getByID(id);
     }
 
     public boolean addJet(int maxWeight)
@@ -48,7 +41,7 @@ public class TransportManager {
         for(int i = 0 ; i < this.transportRepo.getSize() ; i++)
         {
             try {
-                accommodations.add(this.transportRepo.getByIndex(i));
+                accommodations.add(this.transportRepo.getByID(i));
             }
             catch (Exception e)
             {
