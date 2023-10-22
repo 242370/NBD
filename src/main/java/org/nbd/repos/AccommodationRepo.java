@@ -2,7 +2,6 @@ package org.nbd.repos;
 
 import jakarta.persistence.EntityManager;
 import org.nbd.model.Accommodation;
-import org.nbd.model.Trip;
 
 import java.util.ArrayList;
 

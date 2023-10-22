@@ -6,6 +6,11 @@
     <persistence-unit name="test" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>org.nbd.model.Client</class>
+        <class>org.nbd.model.Accommodation</class>
+        <class>org.nbd.model.Jet</class>
+        <class>org.nbd.model.Lift</class>
+        <class>org.nbd.model.Scooter</class>
+        <class>org.nbd.model.Trip</class>
         <!--        <properties>-->
         <!--            <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>-->
         <!--            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/nbddb"/>-->

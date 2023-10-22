@@ -11,7 +11,7 @@ public class Lift extends TransportMean{
 
     public boolean isPetSupportive()
     {
-        return true;
+        return false;
     }
 
     public String getType()

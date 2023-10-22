@@ -21,10 +21,6 @@ public class TripManager {
     }
 
     public boolean addTrip(int length, String name, TransportMean transportMean, Accommodation accommodation) {
-        if (!transportMean.isAvailable()) {
-            return false;
-        }
-        transportMean.setAvailable(false);
         return tripRepo.add(new Trip(length, name, transportMean, accommodation));
     }
 

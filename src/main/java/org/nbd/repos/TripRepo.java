@@ -18,6 +18,11 @@ public class TripRepo {
     {
         try {
             entityManager.getTransaction().begin();
+            if(!trip.getTransportMean().isAvailable())
+            {
+                throw new Exception("Wanted transport mean is unavailable");
+            }
+            trip.getTransportMean().setAvailable(false);
             entityManager.persist(trip);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
@@ -26,12 +31,12 @@ public class TripRepo {
         }
         return trips.add(trip);
     }
-    public Trip getByID(int index)
+    public Trip getByID(int id)
     {
         Trip trip = null;
         try {
             entityManager.getTransaction().begin();
-            trip = entityManager.find(Trip.class, index);
+            trip = entityManager.find(Trip.class, id);
             entityManager.getTransaction().commit();
         }
         catch (Exception e)

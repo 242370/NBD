@@ -1,11 +1,13 @@
 package org.nbd.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Embeddable
 @Access(AccessType.FIELD)
 @NoArgsConstructor
+@Getter
 public class Pet {
 
     @Column(name = "pet_name")
@@ -20,8 +22,5 @@ public class Pet {
         this.petName = petName;
         this.species = species;
         this.petWeight = petWeight;
-    }
-    public int getPetWeight() {
-        return petWeight;
     }
 }

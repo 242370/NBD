@@ -76,14 +76,19 @@ public class Trip {
 
     public boolean addClient(Client customer) throws Exception
     {
+
         if(clients.size() + 1 > this.accommodation.getCapacity())
         {
-            throw new Exception("capacity not enough");
+            throw new Exception("Capacity not enough");
         }
 
         if(this.actualWeight + customer.getWeight() > this.transportMean.getMaxWeight())
         {
-            throw new Exception("weight not enough");
+            throw new Exception("Weight too much");
+        }
+        if(customer.hasPet() && !this.transportMean.isPetSupportive())
+        {
+            throw new Exception("Transport not pet supportive");
         }
         this.actualWeight += customer.getWeight();
         return clients.add(customer);
