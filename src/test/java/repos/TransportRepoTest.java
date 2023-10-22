@@ -5,10 +5,9 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.nbd.model.Jet;
-import org.nbd.model.Lift;
-import org.nbd.model.Scooter;
+import org.nbd.model.*;
 import org.nbd.repos.TransportRepo;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TransportRepoTest {
@@ -19,16 +18,9 @@ public class TransportRepoTest {
     int testJetMaxWeight = 1000;
     int testScooterMaxWeight = 100;
 
-    @BeforeEach
-    void init()
-    {
-
-    }
-
     @Test
-    void addingJetTest()
-    {
-        assertDoesNotThrow(()-> repo.add(new Jet(testJetMaxWeight)));
+    void addingJetTest() {
+        assertDoesNotThrow(() -> repo.add(new Jet(testJetMaxWeight)));
         Jet jet = (Jet) repo.getByID(1);
         assertNotNull(jet);
         assertEquals(jet.getMaxWeight(), testJetMaxWeight);
@@ -37,8 +29,7 @@ public class TransportRepoTest {
     }
 
     @Test
-    void addingLiftTest()
-    {
+    void addingLiftTest() {
         assertDoesNotThrow(() -> repo.add(new Lift(testLiftMaxWeight)));
         Lift lift = (Lift) repo.getByID(1);
         assertNotNull(lift);
@@ -48,13 +39,22 @@ public class TransportRepoTest {
     }
 
     @Test
-    void addingScooterTest()
-    {
+    void addingScooterTest() {
         assertDoesNotThrow(() -> repo.add(new Scooter(testScooterMaxWeight)));
         Scooter scooter = (Scooter) repo.getByID(1);
         assertNotNull(scooter);
         assertEquals(scooter.getMaxWeight(), testScooterMaxWeight);
         assertTrue(scooter.isAvailable());
         assertEquals(scooter.getType(), "Scooter");
+    }
+
+    @Test
+    void removeTransportMeanTest() {
+        assertDoesNotThrow(() -> repo.add(new Scooter(testScooterMaxWeight)));
+        TransportMean transport = repo.getByID(1);
+        assertNotNull(transport);
+        repo.remove(1);
+        TransportMean removedTransport = repo.getByID(1);
+        assertNull(removedTransport);
     }
 }

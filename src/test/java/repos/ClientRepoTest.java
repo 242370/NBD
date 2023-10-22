@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.nbd.model.Accommodation;
 import org.nbd.model.Client;
 import org.nbd.repos.ClientRepo;
 
@@ -19,13 +20,10 @@ public class ClientRepoTest {
     String testClientLastName = "Cyberbully";
     int testClientWeight = 50;
 
-    @BeforeEach
-    void init() {
-    }
 
     @Test
     void addingClientsTest() {
-        assertDoesNotThrow(() -> repo.addClient(new Client(testClientName, testClientLastName, testClientWeight)));
+        assertDoesNotThrow(() -> repo.add(new Client(testClientName, testClientLastName, testClientWeight)));
         Client client = repo.getByID(1);
         assertNotNull(client);
         assertEquals(client.getFirstName(), testClientName);
@@ -35,14 +33,24 @@ public class ClientRepoTest {
     }
 
     @Test
-    void addingClientWithPetTest()
-    {
+    void addingClientWithPetTest() {
         Client client = new Client(testClientName, testClientLastName, testClientWeight);
         client.addPet("Manat", "Manatee", 38);
-        assertDoesNotThrow(() -> repo.addClient(client));
+        assertDoesNotThrow(() -> repo.add(client));
         Client clientFromDatabase = repo.getByID(1);
         assertNotNull(clientFromDatabase.getPet());
         assertEquals(clientFromDatabase.getPet().getPetWeight(), 38);
         assertEquals(clientFromDatabase.getPet().getSpecies(), "Manatee");
     }
+
+    @Test
+    void removeClientTest() {
+        assertDoesNotThrow(() -> repo.add(new Client(testClientName, testClientLastName, testClientWeight)));
+        Client client = repo.getByID(1);
+        assertNotNull(client);
+        repo.remove(1);
+        Client removedClient = repo.getByID(1);
+        assertNull(removedClient);
+    }
+
 }

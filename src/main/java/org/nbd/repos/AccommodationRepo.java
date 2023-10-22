@@ -1,13 +1,12 @@
 package org.nbd.repos;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.LockModeType;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
 import org.nbd.model.Accommodation;
 
-import java.util.ArrayList;
-
-public class AccommodationRepo {
-
-    private ArrayList<Accommodation> accommodations = new ArrayList<>();
+public class AccommodationRepo implements IRepo<Accommodation>{
 
     EntityManager entityManager;
 
@@ -15,8 +14,7 @@ public class AccommodationRepo {
         this.entityManager = entityManager;
     }
 
-    public boolean add(Accommodation hotel)
-    {
+    public void add(Accommodation hotel) {
         try {
             entityManager.getTransaction().begin();
             entityManager.persist(hotel);
@@ -25,15 +23,51 @@ public class AccommodationRepo {
             entityManager.getTransaction().rollback();
             System.out.println(e.getMessage());
         }
-        return accommodations.add(hotel);
     }
 
-    public Accommodation getByID(int id)
-    {
+    public Accommodation getByID(int id) {
         Accommodation accommodation = null;
         try {
             entityManager.getTransaction().begin();
             accommodation = entityManager.find(Accommodation.class, id);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            System.out.println(e.getMessage());
+        }
+        return accommodation;
+    }
+
+    public void changePricePerPerson(int id, double newPrice) {
+        try {
+            entityManager.getTransaction().begin();
+            Accommodation updatedAccommodation = entityManager.merge(entityManager.find(Accommodation.class, id, LockModeType.PESSIMISTIC_WRITE));
+            updatedAccommodation.setPricePerPerson(newPrice);
+            entityManager.getTransaction().commit(); // unlocks
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback(); // also unlocks
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void changeRating(int id, int newRating)
+    {
+        try {
+            entityManager.getTransaction().begin();
+            Accommodation updatedAccommodation = entityManager.merge(entityManager.find(Accommodation.class, id, LockModeType.PESSIMISTIC_WRITE));
+            updatedAccommodation.setRating(newRating);
+            entityManager.getTransaction().commit(); // unlocks
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback(); // also unlocks
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void remove(int id)
+    {
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.remove(entityManager.find(Accommodation.class, id, LockModeType.PESSIMISTIC_WRITE));
             entityManager.getTransaction().commit();
         }
         catch (Exception e)
@@ -41,11 +75,13 @@ public class AccommodationRepo {
             entityManager.getTransaction().rollback();
             System.out.println(e.getMessage());
         }
-        return accommodation;
     }
 
-    public int getSize()
+    public long getSize()
     {
-        return accommodations.size();
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> query = builder.createQuery(Long.class);
+        query.select(builder.count(query.from(Accommodation.class)));
+        return entityManager.createQuery(query).getSingleResult();
     }
 }

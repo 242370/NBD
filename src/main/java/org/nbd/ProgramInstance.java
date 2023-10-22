@@ -16,7 +16,7 @@ public class ProgramInstance {
             sharkTours.getTransportManager().addJet(150);
             Jet jet = (Jet) sharkTours.getTransportManager().getByID(1);
             sharkTours.getTripManager().addTrip(10, "QAZ", jet, accommodation);
-            sharkTours.getTransportManager().addLift(150);
+            sharkTours.getTransportManager().addJet(150);
             sharkTours.getClientManager().addClient("Rafal", "Cyberbully", 50);
             sharkTours.getClientManager().addClientWithPet("Adam", "Kruszynski", 50, "Kaczka", "duck", 10);
             sharkTours.getTripManager().addClientToTrip(sharkTours.getClientManager().getByID(1), sharkTours.getTripManager().getByID(1));
@@ -24,6 +24,7 @@ public class ProgramInstance {
             sharkTours.getTripManager().addClientToTrip(sharkTours.getClientManager().getByID(2), sharkTours.getTripManager().getByID(2));
             Trip trip = sharkTours.getTripManager().getByID(1);
             log.error(trip.getNumberOfClients());
+            sharkTours.getTripManager().remove(1);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

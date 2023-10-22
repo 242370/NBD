@@ -20,12 +20,11 @@ public class AccommodationRepoTest {
 
     double testCapacity = 150.5;
     double testPricePerPerson = 10.0;
+    double newPricePerPerson = 15.0;
     int testRating = 4;
+    int newTestRating = 5;
     String testDestination = "Zgierz";
 
-    @BeforeEach
-    void init() {
-    }
 
     @Test
     void addingAccommodationsTest() {
@@ -36,5 +35,34 @@ public class AccommodationRepoTest {
         assertEquals(accommodation.getPricePerPerson(), testPricePerPerson);
         assertEquals(accommodation.getRating(), testRating);
         assertEquals(accommodation.getDestination(), testDestination);
+    }
+
+    @Test
+    void changePricePerPersonTest() {
+        assertDoesNotThrow(() -> repo.add(new Accommodation(testCapacity, testPricePerPerson, testRating, testDestination)));
+        Accommodation accommodation = repo.getByID(1);
+        assertEquals(accommodation.getPricePerPerson(), testPricePerPerson);
+        repo.changePricePerPerson(1, newPricePerPerson);
+        assertEquals(accommodation.getPricePerPerson(), newPricePerPerson);
+    }
+
+    @Test
+    void changeRating()
+    {
+        assertDoesNotThrow(() -> repo.add(new Accommodation(testCapacity, testPricePerPerson, testRating, testDestination)));
+        Accommodation accommodation = repo.getByID(1);
+        assertEquals(accommodation.getRating(), testRating);
+        repo.changeRating(1, newTestRating);
+        assertEquals(accommodation.getRating(), newTestRating);
+    }
+
+    @Test
+    void removeAccommodationTest() {
+        assertDoesNotThrow(() -> repo.add(new Accommodation(testCapacity, testPricePerPerson, testRating, testDestination)));
+        Accommodation accommodation = repo.getByID(1);
+        assertNotNull(accommodation);
+        repo.remove(1);
+        Accommodation removedAccommodation = repo.getByID(1);
+        assertNull(removedAccommodation);
     }
 }

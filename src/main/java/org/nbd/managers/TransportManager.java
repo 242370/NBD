@@ -13,41 +13,26 @@ public class TransportManager {
         this.transportRepo = transportRepo;
     }
 
-    public TransportMean getByID(int id)
-    {
+    public TransportMean getByID(int id) {
         return transportRepo.getByID(id);
     }
 
-    public boolean addJet(int maxWeight)
-    {
+    public void addJet(int maxWeight) {
         Jet jet = new Jet(maxWeight);
-        return transportRepo.add(jet);
+        transportRepo.add(jet);
     }
 
-    public boolean addScooter(int maxWeight)
-    {
+    public void addScooter(int maxWeight) {
         Scooter jet = new Scooter(maxWeight);
-        return transportRepo.add(jet);
+        transportRepo.add(jet);
     }
 
-    public boolean addLift(int maxWeight)
-    {
+    public void addLift(int maxWeight) {
         Lift jet = new Lift(maxWeight);
-        return transportRepo.add(jet);
+        transportRepo.add(jet);
     }
-    public List<TransportMean> getAll()
-    {
-        ArrayList<TransportMean> accommodations = new ArrayList<>();
-        for(int i = 0 ; i < this.transportRepo.getSize() ; i++)
-        {
-            try {
-                accommodations.add(this.transportRepo.getByID(i));
-            }
-            catch (Exception e)
-            {
-                System.out.println(e.getMessage());
-            }
-        }
-        return accommodations;
+
+    public void remove(int id) {
+        this.transportRepo.remove(id);
     }
 }

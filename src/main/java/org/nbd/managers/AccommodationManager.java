@@ -3,9 +3,6 @@ package org.nbd.managers;
 import org.nbd.model.Accommodation;
 import org.nbd.repos.AccommodationRepo;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class AccommodationManager {
     private AccommodationRepo accommodationRepo;
 
@@ -17,28 +14,28 @@ public class AccommodationManager {
     {
         return accommodationRepo.getByID(id);
     }
-    public boolean addPlace(double capacity, double pricePerPerson, int rating, String destination) throws Exception
+    public void addPlace(double capacity, double pricePerPerson, int rating, String destination) throws Exception
     {
         if(rating > 5 || rating < 1)
         {
             throw new Exception("incorrect rating");
         }
         Accommodation accommodation = new Accommodation(capacity, pricePerPerson, rating, destination);
-        return this.accommodationRepo.add(accommodation);
+        this.accommodationRepo.add(accommodation);
     }
-    public List<Accommodation> getAll()
+
+    public void changePricePerPerson(int id, double newPrice)
     {
-        ArrayList<Accommodation> accommodations = new ArrayList<>();
-        for(int i = 0 ; i < this.accommodationRepo.getSize() ; i++)
-        {
-            try {
-                accommodations.add(this.accommodationRepo.getByID(i));
-            }
-            catch (Exception e)
-            {
-                System.out.println(e.getMessage());
-            }
-        }
-        return accommodations;
+        this.accommodationRepo.changePricePerPerson(id, newPrice);
+    }
+
+    public void changeRating(int id, int newRating)
+    {
+        this.accommodationRepo.changeRating(id, newRating);
+    }
+
+    public void remove(int id)
+    {
+        this.accommodationRepo.remove(id);
     }
 }

@@ -14,14 +14,14 @@ public class ClientManager {
     {
         return clientRepo.getByID(id);
     }
-    public boolean addClient(String firstName, String lastName, int weight) throws Exception
+    public void addClient(String firstName, String lastName, int weight) throws Exception
     {
         if(weight < 1)
         {
             throw new Exception("incorrect weight");
         }
         Client client = new Client(firstName, lastName, weight);
-        return this.clientRepo.addClient(client);
+        this.clientRepo.add(client);
     }
 
     public void addClientWithPet(String firstName, String lastName, int weight, String petName, String petSpecies, int petWeight) throws Exception
@@ -32,7 +32,12 @@ public class ClientManager {
         }
         Client client = new Client(firstName, lastName, weight);
         client.addPet(petName, petSpecies, petWeight);
-        clientRepo.addClient(client);
+        clientRepo.add(client);
+    }
+
+    public void remove(int id)
+    {
+        this.clientRepo.remove(id);
     }
 
 //    public List<Accommodation> getAll()

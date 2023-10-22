@@ -1,13 +1,14 @@
 package org.nbd.repos;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.LockModeType;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
 import org.nbd.model.TransportMean;
-import org.nbd.model.Trip;
 
 import java.util.ArrayList;
 
-public class TransportRepo {
-    private ArrayList<TransportMean> transportMeans = new ArrayList<>();
+public class TransportRepo implements IRepo<TransportMean> {
 
     EntityManager entityManager;
 
@@ -15,8 +16,7 @@ public class TransportRepo {
         this.entityManager = entityManager;
     }
 
-    public boolean add(TransportMean transportMean)
-    {
+    public void add(TransportMean transportMean) {
         try {
             entityManager.getTransaction().begin();
             entityManager.persist(transportMean);
@@ -25,36 +25,36 @@ public class TransportRepo {
             entityManager.getTransaction().rollback();
             System.out.println(e.getMessage());
         }
-        return transportMeans.add(transportMean);
     }
-    public TransportMean getByID(int id)
-    {
+
+    public TransportMean getByID(int id) {
         TransportMean transportMean = null;
         try {
             entityManager.getTransaction().begin();
             transportMean = entityManager.find(TransportMean.class, id);
             entityManager.getTransaction().commit();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             entityManager.getTransaction().rollback();
             System.out.println(e.getMessage());
         }
         return transportMean;
     }
-    public TransportMean getById(int ID) throws Exception
-    {
-        for (TransportMean transportMean : transportMeans)
-        {
-            if(ID == transportMean.getID())
-            {
-                return transportMean;
-            }
+
+    public void remove(int id) {
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.remove(entityManager.find(TransportMean.class, id, LockModeType.PESSIMISTIC_WRITE));
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            System.out.println(e.getMessage());
         }
-        throw new Exception("invalid ID");
     }
-    public int getSize()
-    {
-        return transportMeans.size();
+
+    public long getSize() {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> query = builder.createQuery(Long.class);
+        query.select(builder.count(query.from(TransportMean.class)));
+        return entityManager.createQuery(query).getSingleResult();
     }
 }

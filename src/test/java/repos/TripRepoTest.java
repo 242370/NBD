@@ -23,11 +23,6 @@ public class TripRepoTest {
     Client testClient1 = new Client("Rafal", "Cyberbully", 40);
     Client testClient2 = new Client("Adam", "Kruszynski", 56);
 
-    @BeforeEach
-    void init() {
-
-    }
-
     @Test
     void addingTripsTest() {
         assertDoesNotThrow(() -> repo.add(new Trip(testlength, testName, testJet, testAccommodation)));
@@ -44,7 +39,7 @@ public class TripRepoTest {
     void addingClientsToTripTest() {
         assertDoesNotThrow(() -> repo.add(new Trip(testlength, testName, testJet, testAccommodation)));
         assertDoesNotThrow(() -> repo.addClientToTrip(repo.getByID(1), testClient1));
-        assertEquals(repo.getByID(1).getActualWeight(), 50);
+        assertEquals(repo.getByID(1).getActualWeight(), 40);
         assertEquals(repo.getByID(1).getNumberOfClients(), 1);
     }
 
@@ -53,7 +48,7 @@ public class TripRepoTest {
         assertDoesNotThrow(() -> repo.add(new Trip(testlength, testName, testJet, testAccommodation)));
         testClient1.addPet("Manat", "Manatee", 4);
         assertDoesNotThrow(() -> repo.addClientToTrip(repo.getByID(1), testClient1));
-        assertEquals(repo.getByID(1).getActualWeight(), 54);
+        assertEquals(repo.getByID(1).getActualWeight(), 44);
         assertEquals(repo.getByID(1).getNumberOfClients(), 1);
         assertTrue(repo.getByID(1).getClient(0).hasPet());
     }
@@ -84,5 +79,15 @@ public class TripRepoTest {
         Trip trip = repo.getByID(1);
         repo.addClientToTrip(trip, testClient1);
         assertEquals(trip.getNumberOfClients(), 0);
+    }
+
+    @Test
+    void removeTripTest() {
+        assertDoesNotThrow(() -> repo.add(new Trip(testlength, testName, testScooter, testAccommodation)));
+        Trip trip = repo.getByID(1);
+        assertNotNull(trip);
+        repo.remove(1);
+        Trip removedTrip = repo.getByID(1);
+        assertNull(removedTrip);
     }
 }

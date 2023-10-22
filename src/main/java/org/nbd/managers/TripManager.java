@@ -20,8 +20,8 @@ public class TripManager {
         return tripRepo.getByID(id);
     }
 
-    public boolean addTrip(int length, String name, TransportMean transportMean, Accommodation accommodation) {
-        return tripRepo.add(new Trip(length, name, transportMean, accommodation));
+    public void addTrip(int length, String name, TransportMean transportMean, Accommodation accommodation) {
+        tripRepo.add(new Trip(length, name, transportMean, accommodation));
     }
 
     public boolean addClient(Trip trip, Client client) throws Exception {
@@ -51,5 +51,10 @@ public class TripManager {
     public void addClientToTrip(Client client, Trip trip)
     {
         this.tripRepo.addClientToTrip(trip, client);
+    }
+
+    public void remove(int id)
+    {
+        this.tripRepo.remove(id);
     }
 }
