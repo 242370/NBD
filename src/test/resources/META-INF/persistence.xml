@@ -11,23 +11,15 @@
         <class>org.nbd.model.Lift</class>
         <class>org.nbd.model.Scooter</class>
         <class>org.nbd.model.Trip</class>
-        <!--        <properties>-->
-        <!--            <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>-->
-        <!--            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/nbddb"/>-->
-        <!--            <property name="jakarta.persistence.jdbc.user" value="nbd"/>-->
-        <!--            <property name="jakarta.persistence.jdbc.password" value="nbdpassword"/>-->
-        <!--            <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>-->
-        <!--        </properties>-->
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="org.h2.Driver"/>
             <property name="jakarta.persistence.jdbc.url"
-                      value="jdbc:h2:mem:NDBtest;DB_CLOSE_DELAY=-1;NON_KEYWORDS=KEY,VALUE;MODE=PostgreSQL"/>
+                      value="jdbc:h2:mem:NBDtest;DB_CLOSE_DELAY=-1;NON_KEYWORDS=KEY,VALUE;MODE=PostgreSQL"/>
             <property name="jakarta.persistence.jdbc.user" value="nbd"/>
             <property name="jakarta.persistence.jdbc.password" value="nbdpassword"/>
             <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
             <property name="org.hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
             <property name="hibernate.connection.isolation" value="8"/>
-            <!-- TRANSACTION_SERIALIZABLE-->
         </properties>
     </persistence-unit>
 </persistence>

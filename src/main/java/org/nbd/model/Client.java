@@ -2,11 +2,6 @@ package org.nbd.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Entity
@@ -36,8 +31,7 @@ public class Client {
     }
 
     public int getWeight() {
-        if(this.hasPet)
-        {
+        if (this.hasPet) {
             return this.weight + this.pet.getPetWeight();
         }
         return this.weight;
@@ -47,7 +41,7 @@ public class Client {
         return hasPet;
     }
 
-    public void addPet(String name, String species, int weight){
+    public void addPet(String name, String species, int weight) {
         Pet newPet = new Pet(name, species, weight);
         this.hasPet = true;
         this.pet = newPet;

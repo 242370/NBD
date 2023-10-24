@@ -45,23 +45,4 @@ public class TravelAgency {
     public ClientManager getClientManager() {
         return clientManager;
     }
-
-    public boolean addClient(Trip trip, Client client) throws Exception {
-        if(this.tripManager.addClient(trip, client))
-        {
-            account += trip.getAccommodation().getPricePerPerson();
-            return true;
-        }
-        return false;
-    }
-
-    public boolean addClientWithPet(Trip trip, String firstName, String lastName, int weight, String petName, String petSpecies, int petWeight)
-    {
-        if(this.tripManager.addClientWithPet(trip, firstName, lastName, weight, petName, petSpecies, petWeight))
-        {
-            account += trip.getAccommodation().getPricePerPerson();
-            return true;
-        }
-        return false;
-    }
 }

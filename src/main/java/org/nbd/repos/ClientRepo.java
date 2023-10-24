@@ -6,17 +6,14 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import org.nbd.model.Client;
 
-import java.util.ArrayList;
-
-public class ClientRepo implements IRepo<Client>{
+public class ClientRepo implements IRepo<Client> {
     EntityManager entityManager;
 
     public ClientRepo(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
-    public void add(Client client)
-    {
+    public void add(Client client) {
         try {
             entityManager.getTransaction().begin();
             entityManager.persist(client);
@@ -27,38 +24,31 @@ public class ClientRepo implements IRepo<Client>{
         }
     }
 
-    public Client getByID(int id)
-    {
+    public Client getByID(int id) {
         Client client = null;
         try {
             entityManager.getTransaction().begin();
             client = entityManager.find(Client.class, id);
             entityManager.getTransaction().commit();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             entityManager.getTransaction().rollback();
             System.out.println(e.getMessage());
         }
         return client;
     }
 
-    public void remove(int id)
-    {
+    public void remove(int id) {
         try {
             entityManager.getTransaction().begin();
             entityManager.remove(entityManager.find(Client.class, id, LockModeType.PESSIMISTIC_WRITE));
             entityManager.getTransaction().commit();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             entityManager.getTransaction().rollback();
             System.out.println(e.getMessage());
         }
     }
 
-    public long getSize()
-    {
+    public long getSize() {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Long> query = builder.createQuery(Long.class);
         query.select(builder.count(query.from(Client.class)));

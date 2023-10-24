@@ -7,8 +7,6 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import org.nbd.model.Client;
 import org.nbd.model.Trip;
 
-import java.util.ArrayList;
-
 public class TripRepo implements IRepo<Trip> {
     EntityManager entityManager;
 

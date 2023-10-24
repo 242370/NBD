@@ -6,8 +6,6 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import org.nbd.model.TransportMean;
 
-import java.util.ArrayList;
-
 public class TransportRepo implements IRepo<TransportMean> {
 
     EntityManager entityManager;

@@ -30,5 +30,4 @@ public class Accommodation {
         this.rating = rating;
         this.destination = destination;
     }
-
 }

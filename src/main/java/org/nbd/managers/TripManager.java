@@ -6,9 +6,6 @@ import org.nbd.model.TransportMean;
 import org.nbd.model.Trip;
 import org.nbd.repos.TripRepo;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class TripManager {
     private TripRepo tripRepo;
 
@@ -24,37 +21,11 @@ public class TripManager {
         tripRepo.add(new Trip(length, name, transportMean, accommodation));
     }
 
-    public boolean addClient(Trip trip, Client client) throws Exception {
-        return trip.addClient(client);
-    }
-
-    public boolean addClientWithPet(Trip trip, String firstName, String lastName, int weight, String petName, String petSpecies, int petWeight) {
-        return trip.addClientWithPet(new Client(firstName, lastName, weight), petName, petSpecies, weight);
-    }
-
-    public List<Trip> getAll()
-    {
-        ArrayList<Trip> trips = new ArrayList<>();
-        for(int i = 0 ; i < tripRepo.getSize() ; i++)
-        {
-            try {
-                trips.add(tripRepo.getByID(i));
-            }
-            catch (Exception e)
-            {
-                System.out.println(e.getMessage());
-            }
-        }
-        return trips;
-    }
-
-    public void addClientToTrip(Client client, Trip trip)
-    {
+    public void addClientToTrip(Client client, Trip trip) {
         this.tripRepo.addClientToTrip(trip, client);
     }
 
-    public void remove(int id)
-    {
+    public void remove(int id) {
         this.tripRepo.remove(id);
     }
 }

@@ -3,9 +3,6 @@ package org.nbd.managers;
 import org.nbd.model.*;
 import org.nbd.repos.TransportRepo;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class TransportManager {
     private TransportRepo transportRepo;
 

@@ -15,7 +15,6 @@
     </properties>
 
     <dependencies>
-        <!--        LOGGING -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
@@ -26,13 +25,13 @@
             <artifactId>log4j-core</artifactId>
             <version>2.12.4</version>
         </dependency>
-        <!--        DB -->
+
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.6.0</version>
         </dependency>
-        <!--        PERSISTENCE -->
+
         <dependency>
             <groupId>jakarta.persistence</groupId>
             <artifactId>jakarta.persistence-api</artifactId>
@@ -58,7 +57,7 @@
             <artifactId>jaxb-runtime</artifactId>
             <version>4.0.3</version>
         </dependency>
-        <!--        VALIDATION -->
+
         <dependency>
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
@@ -69,7 +68,7 @@
             <artifactId>hibernate-validator</artifactId>
             <version>8.0.1.Final</version>
         </dependency>
-        <!--        TESTS -->
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -88,17 +87,7 @@
             <version>5.10.0</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.jacoco</groupId>
-            <artifactId>jacoco-maven-plugin</artifactId>
-            <version>0.8.10</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-project-info-reports-plugin</artifactId>
-            <version>3.4.5</version>
-        </dependency>
-        <!-- LOMBOK -->
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -106,25 +95,11 @@
             <scope>provided</scope>
         </dependency>
 
-        <!--        PERSISTENCE TESTS-->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>2.1.214</version>
             <scope>test</scope>
-        </dependency>
-        <!-- MOCKITO -->
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>5.6.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.bytebuddy</groupId>
-            <artifactId>byte-buddy</artifactId>
-            <version>1.14.8</version>
-            <!--            <scope>test</scope>-->
         </dependency>
     </dependencies>
 

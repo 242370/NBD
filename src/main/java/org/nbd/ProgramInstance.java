@@ -23,8 +23,8 @@ public class ProgramInstance {
             sharkTours.getTripManager().addTrip(10, "xD", sharkTours.getTransportManager().getByID(2), accommodation);
             sharkTours.getTripManager().addClientToTrip(sharkTours.getClientManager().getByID(2), sharkTours.getTripManager().getByID(2));
             Trip trip = sharkTours.getTripManager().getByID(1);
-            log.error(trip.getNumberOfClients());
-            sharkTours.getTripManager().remove(1);
+//            sharkTours.getTripManager().remove(1);
+//            sharkTours.getAccommodationManager().changePricePerPerson(1, 2);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
