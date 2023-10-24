@@ -82,6 +82,13 @@ public class TripRepoTest {
     }
 
     @Test
+    void addingTripsIsTransportMeanAvailableFail()
+    {
+        assertDoesNotThrow(() -> repo.add(new Trip(testlength, testName, testScooter, testAccommodation)));
+        repo.add(new Trip(testlength, testName, testScooter, testAccommodation));
+        assertEquals(repo.getSize(), 1);
+    }
+    @Test
     void removeTripTest() {
         assertDoesNotThrow(() -> repo.add(new Trip(testlength, testName, testScooter, testAccommodation)));
         Trip trip = repo.getByID(1);
