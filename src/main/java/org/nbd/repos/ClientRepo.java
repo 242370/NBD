@@ -1,30 +1,27 @@
 package org.nbd.repos;
 
-import org.nbd.model.TransportMean;
+import org.nbd.model.Client;
 
-public class TransportRepo implements IRepo<TransportMean> {
-
-    public void add(TransportMean transportMean) {
+public class ClientRepo implements IRepo<Client> {
+    public void add(Client client) {
         // TODO: implementation
     }
 
-    @Override
-    public TransportMean getByID(int id) throws Exception {
-        if (id < 1) {
+    public Client getByID(int id) throws Exception{
+        if(id < 1)
+        {
             throw new Exception("Id cannot be below 1");
         }
         // TODO: implementation
         return null;
     }
 
-    @Override
     public void remove(int id) throws Exception {
         if (id < 1) {
             throw new Exception("Id cannot be below 1");
         }
         // TODO: implementation
     }
-
 
     public long getSize() {
         // TODO: implementation

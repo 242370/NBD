@@ -2,25 +2,34 @@ package org.nbd.repos;
 
 import org.nbd.model.Trip;
 
-import java.util.ArrayList;
+public class TripRepo implements IRepo<Trip> {
 
-public class TripRepo {
-    private ArrayList<Trip> trips = new ArrayList<>();
 
-    public boolean add(Trip trip)
-    {
-        return trips.add(trip);
+    @Override
+    public void add(Trip trip) {
+        // TODO: implementation
     }
-    public Trip getByIndex(int index) throws Exception
-    {
-        if(index >= trips.size() || index < 0)
-        {
-            throw new Exception("index out of range");
+
+    @Override
+    public Trip getByID(int id) throws Exception {
+        if (id < 1) {
+            throw new Exception("Id cannot be below 1");
         }
-        return trips.get(index);
+        // TODO: implementation
+        return null;
     }
-    public int getSize()
-    {
-        return trips.size();
+
+    @Override
+    public void remove(int id) throws Exception {
+        if (id < 1) {
+            throw new Exception("Id cannot be below 1");
+        }
+        // TODO: implementation
+    }
+
+    @Override
+    public long getSize() {
+        // TODO: implementation
+        return 0;
     }
 }

@@ -2,28 +2,40 @@ package org.nbd.repos;
 
 import org.nbd.model.Accommodation;
 
-import java.util.ArrayList;
-
-public class AccommodationRepo {
-
-    private ArrayList<Accommodation> accommodations = new ArrayList<>();
-
-    public boolean add(Accommodation hotel)
-    {
-        return accommodations.add(hotel);
+public class AccommodationRepo implements IRepo<Accommodation> {
+    public void add(Accommodation hotel) {
+        // TODO: implementation
     }
 
-    public Accommodation getByIndex(int index) throws Exception
-    {
-        if(index >= accommodations.size() || index < 0)
-        {
-            throw new Exception("index out of range");
+    @Override
+    public Accommodation getByID(int id) throws Exception {
+        if (id < 1) {
+            throw new Exception("Id cannot be below 1");
         }
-        return accommodations.get(index);
+        // TODO: implementation
+        return null;
     }
 
-    public int getSize()
+    @Override
+    public void remove(int id) throws Exception {
+        if (id < 1) {
+            throw new Exception("Id cannot be below 1");
+        }
+        // TODO: implementation
+    }
+
+    public long getSize() {
+        // TODO: implementation
+        return 0;
+    }
+
+    public void changePricePerPerson(int id, double newPrice)
     {
-        return accommodations.size();
+        // TODO: implementation
+    }
+
+    public void changeRating(int id, int newRating)
+    {
+        // TODO: implementation
     }
 }

@@ -3,54 +3,39 @@ package org.nbd.managers;
 import org.nbd.model.*;
 import org.nbd.repos.TransportRepo;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class TransportManager {
-    private final TransportRepo transportRepo = new TransportRepo();
+    private TransportRepo transportRepo;
 
-    public TransportMean getByIndex(int index)
-    {
-        TransportMean accommodation = null;
+    public TransportManager(TransportRepo transportRepo) {
+        this.transportRepo = transportRepo;
+    }
+
+    public TransportMean getByID(int id) {
+        TransportMean transportMean = null;
         try {
-            accommodation = this.transportRepo.getByIndex(index);
-        } catch (Exception e)
-        {
+            transportMean = transportRepo.getByID(id);
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return accommodation;
+        return transportMean;
     }
 
-    public boolean addJet(int maxWeight, int ID)
-    {
-        Jet jet = new Jet(maxWeight, ID);
-        return transportRepo.add(jet);
+    public void addJet(int maxWeight) {
+        Jet jet = new Jet(maxWeight);
+        transportRepo.add(jet);
     }
 
-    public boolean addScooter(int maxWeight, int ID)
-    {
-        Scooter jet = new Scooter(maxWeight, ID);
-        return transportRepo.add(jet);
+    public void addScooter(int maxWeight) {
+        Scooter jet = new Scooter(maxWeight);
+        transportRepo.add(jet);
     }
 
-    public boolean addLift(int maxWeight, int ID)
-    {
-        Lift jet = new Lift(maxWeight, ID);
-        return transportRepo.add(jet);
+    public void addLift(int maxWeight) {
+        Lift jet = new Lift(maxWeight);
+        transportRepo.add(jet);
     }
-    public List<TransportMean> getAll()
-    {
-        ArrayList<TransportMean> accommodations = new ArrayList<>();
-        for(int i = 0 ; i < this.transportRepo.getSize() ; i++)
-        {
-            try {
-                accommodations.add(this.transportRepo.getByIndex(i));
-            }
-            catch (Exception e)
-            {
-                System.out.println(e.getMessage());
-            }
-        }
-        return accommodations;
+
+    public void remove(int id) {
+        this.transportRepo.remove(id);
     }
 }

@@ -15,7 +15,6 @@
     </properties>
 
     <dependencies>
-        <!--        LOGGING -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
@@ -27,11 +26,7 @@
             <version>2.12.4</version>
         </dependency>
         <!--        DB -->
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>42.6.0</version>
-        </dependency>
+
         <!--        PERSISTENCE -->
         <dependency>
             <groupId>jakarta.persistence</groupId>
@@ -98,7 +93,7 @@
             <artifactId>maven-project-info-reports-plugin</artifactId>
             <version>3.4.5</version>
         </dependency>
-        <!-- LOMBOK -->
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
