@@ -2,8 +2,8 @@ package org.nbd.model;
 
 public class Lift extends TransportMean{
 
-    public Lift(int maxWeight, int ID) {
-        super(maxWeight, ID);
+    public Lift(int maxWeight) {
+        super(maxWeight);
     }
 
     public boolean isPetSupportive()

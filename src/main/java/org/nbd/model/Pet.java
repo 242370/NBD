@@ -19,7 +19,7 @@ public class Pet {
         return species;
     }
 
-    public int getWeight() {
+    public int getPetWeight() {
         return weight;
     }
 }

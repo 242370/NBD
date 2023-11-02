@@ -1,13 +1,12 @@
 package org.nbd.model;
 
-import java.util.ArrayList;
 
 public class Client {
     private String firstName;
     private String lastName;
     private int weight;
     private boolean hasPet = false;
-    private ArrayList<Pet> pets;
+    private Pet pet;
 
     public Client(String firstName, String lastName, int weight) {
         this.firstName = firstName;
@@ -24,20 +23,23 @@ public class Client {
     }
 
     public int getWeight() {
-        return weight;
+        if (this.hasPet) {
+            return this.weight + this.pet.getPetWeight();
+        }
+        return this.weight;
     }
 
-    public boolean isHasPet() {
+    public boolean hasPet() {
         return hasPet;
     }
 
-    public Pet getPet(int index) {
-        return pets.get(index);
+    public Pet getPet() {
+        return this.pet;
     }
 
-    public boolean addPet(String name, String species, int weight) {
+    public void addPet(String name, String species, int weight) {
         Pet newPet = new Pet(name, species, weight);
         this.hasPet = true;
-        return pets.add(newPet);
+        this.pet = newPet;
     }
 }

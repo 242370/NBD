@@ -36,6 +36,10 @@ public class TransportManager {
     }
 
     public void remove(int id) {
-        this.transportRepo.remove(id);
+        try {
+            this.transportRepo.remove(id);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

@@ -1,12 +1,14 @@
 package org.nbd.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Trip {
-    private final int length ;
-    private final String name ;
-    private int actualWeight = 0 ;
-    ArrayList<Client> clients = new ArrayList<>();
+    private int length;
+    private String name;
+    private int actualWeight = 0;
+
+    private List<Client> clients = new ArrayList<>();
     TransportMean transportMean;
     Accommodation accommodation;
 
@@ -37,52 +39,30 @@ public class Trip {
         return accommodation;
     }
 
-    public Client getClient(int index)
-    {
+    public Client getClient(int index) {
         return clients.get(index);
     }
 
-    public int getNumberOfClients()
-    {
+    public int getNumberOfClients() {
         return clients.size();
     }
 
-    public double calculateCost()
-    {
+    public double calculateCost() {
         return clients.size() * accommodation.getPricePerPerson();
     }
 
-    public boolean addClient(Client customer)
-    {
-        if(clients.size() + 1 > this.accommodation.getCapacity())
-        {
-            return false;
+    public boolean addClient(Client customer) throws Exception {
+
+        if (clients.size() + 1 > this.accommodation.getCapacity()) {
+            throw new Exception("Capacity not enough");
         }
 
-        if(this.actualWeight + customer.getWeight() > this.transportMean.getMaxWeight())
-        {
-            return false;
+        if (this.actualWeight + customer.getWeight() > this.transportMean.getMaxWeight()) {
+            throw new Exception("Weight too much");
         }
-        this.actualWeight += customer.getWeight();
-        return clients.add(customer);
-    }
-
-    public boolean addClientWithPet(Client customer, String petName, String petSpecies, int petWeight)
-    {
-        if(clients.size() + 1 > this.accommodation.getCapacity())
-        {
-            return false;
+        if (customer.hasPet() && !this.transportMean.isPetSupportive()) {
+            throw new Exception("Transport not pet supportive");
         }
-
-        if(!this.transportMean.isPetSupportive())
-        {
-            return false;
-        }
-        if(this.actualWeight + customer.getWeight() + petWeight > this.transportMean.getMaxWeight())
-        {
-            return false;
-        }
-        customer.addPet(petName, petSpecies, petWeight);
         this.actualWeight += customer.getWeight();
         return clients.add(customer);
     }

@@ -1,14 +1,21 @@
 package org.nbd.model;
 
 import org.nbd.managers.AccommodationManager;
+import org.nbd.managers.ClientManager;
 import org.nbd.managers.TransportManager;
 import org.nbd.managers.TripManager;
+import org.nbd.repos.AccommodationRepo;
+import org.nbd.repos.ClientRepo;
+import org.nbd.repos.TransportRepo;
+import org.nbd.repos.TripRepo;
 
 public class TravelAgency {
     private double account;
-    private final TransportManager transportManager = new TransportManager();
-    private final AccommodationManager accommodationManager = new AccommodationManager();
-    private final TripManager tripManager = new TripManager();
+    private final TransportManager transportManager = new TransportManager(new TransportRepo());
+    private final AccommodationManager accommodationManager = new AccommodationManager(new AccommodationRepo());
+    private final TripManager tripManager = new TripManager(new TripRepo());
+
+    private final ClientManager clientManager = new ClientManager(new ClientRepo());
 
     public double getAccount() {
         return account;
@@ -30,23 +37,7 @@ public class TravelAgency {
         return tripManager;
     }
 
-    public boolean addClient(Trip trip, String firstName, String lastName, int weight)
-    {
-        if(this.tripManager.addClient(trip, firstName, lastName, weight))
-        {
-            account += trip.getAccommodation().getPricePerPerson();
-            return true;
-        }
-        return false;
-    }
-
-    public boolean addClientWithPet(Trip trip, String firstName, String lastName, int weight, String petName, String petSpecies, int petWeight)
-    {
-        if(this.tripManager.addClientWithPet(trip, firstName, lastName, weight, petName, petSpecies, petWeight))
-        {
-            account += trip.getAccommodation().getPricePerPerson();
-            return true;
-        }
-        return false;
+    public ClientManager getClientManager() {
+        return clientManager;
     }
 }

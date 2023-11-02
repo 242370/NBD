@@ -1,8 +1,14 @@
 package org.nbd.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
 public class Accommodation {
     private final double capacity;
+    @Setter
     private final double pricePerPerson;
+    @Setter
     private int rating;
     private final String destination;
 
@@ -11,21 +17,5 @@ public class Accommodation {
         this.pricePerPerson = pricePerPerson;
         this.rating = rating;
         this.destination = destination;
-    }
-
-    public double getCapacity() {
-        return capacity;
-    }
-
-    public double getPricePerPerson() {
-        return pricePerPerson;
-    }
-
-    public int getRating() {
-        return rating;
-    }
-
-    public String getDestination() {
-        return destination;
     }
 }

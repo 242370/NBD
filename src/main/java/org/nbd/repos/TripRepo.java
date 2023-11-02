@@ -1,5 +1,6 @@
 package org.nbd.repos;
 
+import org.nbd.model.Client;
 import org.nbd.model.Trip;
 
 public class TripRepo implements IRepo<Trip> {
@@ -31,5 +32,9 @@ public class TripRepo implements IRepo<Trip> {
     public long getSize() {
         // TODO: implementation
         return 0;
+    }
+
+    public void addClientToTrip(Trip trip, Client client) {
+        // TODO: implementation
     }
 }
