@@ -1,10 +1,30 @@
 package org.nbd.repos;
 
+import com.mongodb.client.MongoIterable;
+import org.nbd.model.Accommodation;
 import org.nbd.model.Client;
 import org.nbd.model.Trip;
 
-public class TripRepo implements IRepo<Trip> {
+import java.util.ArrayList;
 
+import static com.mongodb.client.model.Filters.eq;
+
+public class TripRepo extends AbstractMongoRepo implements IRepo<Trip> {
+    private final String collectionName = "trips";
+
+    public TripRepo() {
+        super.initDbConnection();
+
+        MongoIterable<String> list = this.getDatabase().listCollectionNames();
+        for (String name : list) {
+            if (name.equals(collectionName)) {
+                this.getDatabase().getCollection(name).drop();
+                break;
+            }
+        }
+
+        this.getDatabase().createCollection(collectionName);
+    }
 
     @Override
     public void add(Trip trip) {
@@ -16,8 +36,9 @@ public class TripRepo implements IRepo<Trip> {
         if (id < 1) {
             throw new Exception("Id cannot be below 1");
         }
-        // TODO: implementation
-        return null;
+
+        return this.getDatabase().getCollection(collectionName, Trip.class).find(eq("_id", id))
+                .into(new ArrayList<>()).get(0);
     }
 
     @Override

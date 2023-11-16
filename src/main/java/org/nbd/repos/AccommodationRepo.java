@@ -1,8 +1,10 @@
 package org.nbd.repos;
 
-import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoIterable;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
+import org.bson.conversions.Bson;
 import org.nbd.model.Accommodation;
 
 import java.util.ArrayList;
@@ -11,6 +13,7 @@ import static com.mongodb.client.model.Filters.eq;
 
 public class AccommodationRepo extends AbstractMongoRepo implements IRepo<Accommodation> {
     private final String collectionName = "accommodations";
+    private MongoCollection<Accommodation> accommodations;
 
     public AccommodationRepo() {
         super.initDbConnection();
@@ -24,12 +27,12 @@ public class AccommodationRepo extends AbstractMongoRepo implements IRepo<Accomm
         }
 
         this.getDatabase().createCollection(collectionName);
+
+        this.accommodations = this.getDatabase().getCollection(collectionName, Accommodation.class);
     }
 
     public void add(Accommodation hotel) {
-        MongoCollection<Accommodation> accommodations = this.getDatabase().getCollection(collectionName, Accommodation.class);
-
-        accommodations.insertOne(hotel);
+        this.accommodations.insertOne(hotel);
     }
 
     @Override
@@ -38,7 +41,7 @@ public class AccommodationRepo extends AbstractMongoRepo implements IRepo<Accomm
             throw new Exception("Id cannot be below 1");
         }
 
-        return this.getDatabase().getCollection(collectionName, Accommodation.class).find(eq("_id", id))
+        return this.accommodations.find(eq("_id", id))
                 .into(new ArrayList<>()).get(0);
     }
 
@@ -47,7 +50,9 @@ public class AccommodationRepo extends AbstractMongoRepo implements IRepo<Accomm
         if (id < 1) {
             throw new Exception("Id cannot be below 1");
         }
-        // TODO: implementation
+        Bson filter = Filters.eq("_id", id);
+
+        this.accommodations.findOneAndDelete(filter);
     }
 
     public long getSize() {
@@ -57,11 +62,17 @@ public class AccommodationRepo extends AbstractMongoRepo implements IRepo<Accomm
 
     public void changePricePerPerson(int id, double newPrice)
     {
-        // TODO: implementation
+        Bson filter = Filters.eq("_id", id);
+        Bson setUpdate = Updates.set("pricePerPerson", newPrice);
+
+        this.accommodations.updateOne(filter, setUpdate);
     }
 
     public void changeRating(int id, int newRating)
     {
-        // TODO: implementation
+        Bson filter = Filters.eq("_id", id);
+        Bson setUpdate = Updates.set("rating", newRating);
+
+        this.accommodations.updateOne(filter, setUpdate);
     }
 }
