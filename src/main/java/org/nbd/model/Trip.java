@@ -1,18 +1,27 @@
 package org.nbd.model;
 
+import org.bson.codecs.pojo.annotations.BsonProperty;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Trip {
+    @BsonProperty("_id")
+    private final int id;
+    @BsonProperty("length")
     private int length;
+    @BsonProperty("name")
     private String name;
+    @BsonProperty("actualWeight")
     private int actualWeight = 0;
 
     private List<Client> clients = new ArrayList<>();
     TransportMean transportMean;
     Accommodation accommodation;
 
-    public Trip(int length, String name, TransportMean transportMean, Accommodation accommodation) {
+    public Trip(@BsonProperty("_id") int id, @BsonProperty("length") int length, @BsonProperty("name") String name,
+                TransportMean transportMean, Accommodation accommodation) {
+        this.id = id;
         this.length = length;
         this.name = name;
         this.transportMean = transportMean;

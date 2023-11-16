@@ -23,8 +23,8 @@ public class TripManager {
         return trip;
     }
 
-    public void addTrip(int length, String name, TransportMean transportMean, Accommodation accommodation) {
-        tripRepo.add(new Trip(length, name, transportMean, accommodation));
+    public void addTrip(int id, int length, String name, TransportMean transportMean, Accommodation accommodation) {
+        tripRepo.add(new Trip(id, length, name, transportMean, accommodation));
     }
 
     public void addClientToTrip(Client client, Trip trip) {

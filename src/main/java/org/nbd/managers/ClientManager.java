@@ -20,19 +20,19 @@ public class ClientManager {
         return client;
     }
 
-    public void addClient(String firstName, String lastName, int weight) throws Exception {
+    public void addClient(int id, String firstName, String lastName, int weight) throws Exception {
         if (weight < 1) {
             throw new Exception("Weight below zero");
         }
-        Client client = new Client(firstName, lastName, weight);
+        Client client = new Client(id, firstName, lastName, weight);
         this.clientRepo.add(client);
     }
 
-    public void addClientWithPet(String firstName, String lastName, int weight, String petName, String petSpecies, int petWeight) throws Exception {
+    public void addClientWithPet(int id, String firstName, String lastName, int weight, String petName, String petSpecies, int petWeight) throws Exception {
         if (weight < 1 || petWeight < 1) {
             throw new Exception("Weight below zero");
         }
-        Client client = new Client(firstName, lastName, weight);
+        Client client = new Client(id, firstName, lastName, weight);
         client.addPet(petName, petSpecies, petWeight);
         clientRepo.add(client);
     }

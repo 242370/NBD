@@ -20,11 +20,11 @@ public class AccommodationManager {
         return accommodation;
     }
 
-    public void addPlace(double capacity, double pricePerPerson, int rating, String destination) throws Exception {
+    public void addPlace(int id, double capacity, double pricePerPerson, int rating, String destination) throws Exception {
         if (rating > 5 || rating < 1) {
             throw new Exception("Incorrect rating");
         }
-        Accommodation accommodation = new Accommodation(capacity, pricePerPerson, rating, destination);
+        Accommodation accommodation = new Accommodation(id, capacity, pricePerPerson, rating, destination);
         this.accommodationRepo.add(accommodation);
     }
 

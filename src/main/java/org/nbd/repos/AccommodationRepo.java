@@ -1,10 +1,35 @@
 package org.nbd.repos;
 
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoIterable;
 import org.nbd.model.Accommodation;
 
-public class AccommodationRepo implements IRepo<Accommodation> {
+import java.util.ArrayList;
+
+import static com.mongodb.client.model.Filters.eq;
+
+public class AccommodationRepo extends AbstractMongoRepo implements IRepo<Accommodation> {
+    private final String collectionName = "accommodations";
+
+    public AccommodationRepo() {
+        super.initDbConnection();
+
+        MongoIterable<String> list = this.getDatabase().listCollectionNames();
+        for (String name : list) {
+            if (name.equals(collectionName)) {
+                this.getDatabase().getCollection(name).drop();
+                break;
+            }
+        }
+
+        this.getDatabase().createCollection(collectionName);
+    }
+
     public void add(Accommodation hotel) {
-        // TODO: implementation
+        MongoCollection<Accommodation> accommodations = this.getDatabase().getCollection(collectionName, Accommodation.class);
+
+        accommodations.insertOne(hotel);
     }
 
     @Override
@@ -12,8 +37,9 @@ public class AccommodationRepo implements IRepo<Accommodation> {
         if (id < 1) {
             throw new Exception("Id cannot be below 1");
         }
-        // TODO: implementation
-        return null;
+
+        return this.getDatabase().getCollection(collectionName, Accommodation.class).find(eq("_id", id))
+                .into(new ArrayList<>()).get(0);
     }
 
     @Override

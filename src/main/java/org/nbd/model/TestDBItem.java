@@ -12,8 +12,6 @@ import java.io.Serializable;
 @Getter
 @NoArgsConstructor
 public class TestDBItem implements Serializable {
-    @BsonProperty("_id")
-    private int id;
 
     @BsonProperty("name")
     private String name;
@@ -34,7 +32,6 @@ public class TestDBItem implements Serializable {
         return "TestDBItem{" +
                 "name='" + name + '\'' +
                 ", age=" + age +
-                "id='" + id +
                 '}';
     }
 }
