@@ -16,11 +16,12 @@ public class Trip {
     private int actualWeight = 0;
 
     private List<Client> clients = new ArrayList<>();
+    @BsonProperty("transportMean")
     TransportMean transportMean;
     Accommodation accommodation;
 
     public Trip(@BsonProperty("_id") int id, @BsonProperty("length") int length, @BsonProperty("name") String name,
-                TransportMean transportMean, Accommodation accommodation) {
+                @BsonProperty("transportMean") TransportMean transportMean, Accommodation accommodation) {
         this.id = id;
         this.length = length;
         this.name = name;

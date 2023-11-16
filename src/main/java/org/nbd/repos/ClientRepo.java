@@ -1,6 +1,9 @@
 package org.nbd.repos;
 
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoIterable;
+import com.mongodb.client.model.Filters;
+import org.bson.conversions.Bson;
 import org.nbd.model.Accommodation;
 import org.nbd.model.Client;
 
@@ -10,7 +13,7 @@ import static com.mongodb.client.model.Filters.eq;
 
 public class ClientRepo extends AbstractMongoRepo implements IRepo<Client> {
     private final String collectionName = "clients";
-
+    private MongoCollection<Client> clients;
     public ClientRepo() {
         super.initDbConnection();
 
@@ -23,10 +26,12 @@ public class ClientRepo extends AbstractMongoRepo implements IRepo<Client> {
         }
 
         this.getDatabase().createCollection(collectionName);
+
+        this.clients = this.getDatabase().getCollection(collectionName, Client.class);
     }
 
     public void add(Client client) {
-        // TODO: implementation
+        this.clients.insertOne(client);
     }
 
     public Client getByID(int id) throws Exception{
@@ -34,7 +39,7 @@ public class ClientRepo extends AbstractMongoRepo implements IRepo<Client> {
         {
             throw new Exception("Id cannot be below 1");
         }
-        return this.getDatabase().getCollection(collectionName, Client.class).find(eq("_id", id))
+        return this.clients.find(eq("_id", id))
                 .into(new ArrayList<>()).get(0);
     }
 
@@ -42,7 +47,9 @@ public class ClientRepo extends AbstractMongoRepo implements IRepo<Client> {
         if (id < 1) {
             throw new Exception("Id cannot be below 1");
         }
-        // TODO: implementation
+        Bson filter = Filters.eq("_id", id);
+
+        this.clients.findOneAndDelete(filter);
     }
 
     public long getSize() {

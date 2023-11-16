@@ -16,6 +16,7 @@ public class Client {
     private int weight;
     @BsonProperty("hasPet")
     private boolean hasPet = false;
+    @BsonProperty("pet")
     private Pet pet;
 
     @BsonCreator
