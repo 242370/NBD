@@ -19,8 +19,8 @@ public class Client {
     @BsonProperty("pet")
     private Pet pet;
 
-    @BsonCreator
-    public Client(@BsonProperty("_id") int id, @BsonProperty("firstName") String firstName, @BsonProperty("lastname") String lastName,
+
+    public Client(@BsonProperty("_id") int id, @BsonProperty("firstName") String firstName, @BsonProperty("lastName") String lastName,
                   @BsonProperty("weight") int weight) {
         this.id = id;
         this.firstName = firstName;
@@ -28,6 +28,16 @@ public class Client {
         this.weight = weight;
     }
 
+    @BsonCreator
+    public Client(@BsonProperty("_id") int id, @BsonProperty("firstName") String firstName, @BsonProperty("lastName") String lastName,
+                  @BsonProperty("weight") int weight, @BsonProperty("hasPet") boolean hasPet, @BsonProperty("pet") Pet pet) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.weight = weight;
+        this.hasPet = hasPet;
+        this.pet = pet;
+    }
     public String getFirstName() {
         return firstName;
     }

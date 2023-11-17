@@ -1,18 +1,27 @@
 package org.nbd.model;
 
-public class Pet {
-    private final String name;
-    private final String species;
-    private final int weight;
+import lombok.Getter;
+import org.bson.codecs.pojo.annotations.BsonCreator;
+import org.bson.codecs.pojo.annotations.BsonProperty;
 
-    public Pet(String name, String species, int weight) {
-        this.name = name;
+@Getter
+public class Pet {
+    @BsonProperty("petName")
+    private final String petName;
+    @BsonProperty("species")
+    private final String species;
+    @BsonProperty("petWeight")
+    private final int petWeight;
+
+    @BsonCreator
+    public Pet(@BsonProperty("petName") String petName, @BsonProperty("species") String species, @BsonProperty("petWeight") int petWeight) {
+        this.petName = petName;
         this.species = species;
-        this.weight = weight;
+        this.petWeight = petWeight;
     }
 
-    public String getName() {
-        return name;
+    public String getPetName() {
+        return petName;
     }
 
     public String getSpecies() {
@@ -20,6 +29,6 @@ public class Pet {
     }
 
     public int getPetWeight() {
-        return weight;
+        return petWeight;
     }
 }

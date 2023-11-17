@@ -41,7 +41,6 @@ public class AccommodationRepoTest {
     void changeRating() {
         assertDoesNotThrow(() -> repo.add(new Accommodation(initialID, testCapacity, testPricePerPerson, testRating, testDestination)));
 
-
         assertEquals(repo.getByID(1).getRating(), testRating);
         repo.changeRating(1, newTestRating);
         assertEquals(repo.getByID(1).getRating(), newTestRating);
