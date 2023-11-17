@@ -36,20 +36,13 @@ public class AccommodationRepo extends AbstractMongoRepo implements IRepo<Accomm
     }
 
     @Override
-    public Accommodation getByID(int id) throws Exception {
-        if (id < 1) {
-            throw new Exception("Id cannot be below 1");
-        }
-
+    public Accommodation getByID(int id) {
         return this.accommodations.find(eq("_id", id))
                 .into(new ArrayList<>()).get(0);
     }
 
     @Override
-    public void remove(int id) throws Exception {
-        if (id < 1) {
-            throw new Exception("Id cannot be below 1");
-        }
+    public void remove(int id){
         Bson filter = Filters.eq("_id", id);
 
         this.accommodations.findOneAndDelete(filter);
@@ -60,16 +53,14 @@ public class AccommodationRepo extends AbstractMongoRepo implements IRepo<Accomm
         return 0;
     }
 
-    public void changePricePerPerson(int id, double newPrice)
-    {
+    public void changePricePerPerson(int id, double newPrice) {
         Bson filter = Filters.eq("_id", id);
         Bson setUpdate = Updates.set("pricePerPerson", newPrice);
 
         this.accommodations.updateOne(filter, setUpdate);
     }
 
-    public void changeRating(int id, int newRating)
-    {
+    public void changeRating(int id, int newRating) {
         Bson filter = Filters.eq("_id", id);
         Bson setUpdate = Updates.set("rating", newRating);
 

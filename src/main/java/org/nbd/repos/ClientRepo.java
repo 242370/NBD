@@ -34,19 +34,12 @@ public class ClientRepo extends AbstractMongoRepo implements IRepo<Client> {
         this.clients.insertOne(client);
     }
 
-    public Client getByID(int id) throws Exception{
-        if(id < 1)
-        {
-            throw new Exception("Id cannot be below 1");
-        }
+    public Client getByID(int id){
         return this.clients.find(eq("_id", id))
                 .into(new ArrayList<>()).get(0);
     }
 
-    public void remove(int id) throws Exception {
-        if (id < 1) {
-            throw new Exception("Id cannot be below 1");
-        }
+    public void remove(int id){
         Bson filter = Filters.eq("_id", id);
 
         this.clients.findOneAndDelete(filter);

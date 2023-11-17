@@ -9,19 +9,13 @@ public class TransportRepo implements IRepo<TransportMean> {
     }
 
     @Override
-    public TransportMean getByID(int id) throws Exception {
-        if (id < 1) {
-            throw new Exception("Id cannot be below 1");
-        }
+    public TransportMean getByID(int id){
         // TODO: implementation
         return null;
     }
 
     @Override
-    public void remove(int id) throws Exception {
-        if (id < 1) {
-            throw new Exception("Id cannot be below 1");
-        }
+    public void remove(int id){
         // TODO: implementation
     }
 

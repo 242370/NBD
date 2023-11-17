@@ -32,20 +32,13 @@ public class TripRepo extends AbstractMongoRepo implements IRepo<Trip> {
     }
 
     @Override
-    public Trip getByID(int id) throws Exception {
-        if (id < 1) {
-            throw new Exception("Id cannot be below 1");
-        }
-
+    public Trip getByID(int id){
         return this.getDatabase().getCollection(collectionName, Trip.class).find(eq("_id", id))
                 .into(new ArrayList<>()).get(0);
     }
 
     @Override
-    public void remove(int id) throws Exception {
-        if (id < 1) {
-            throw new Exception("Id cannot be below 1");
-        }
+    public void remove(int id){
         // TODO: implementation
     }
 
