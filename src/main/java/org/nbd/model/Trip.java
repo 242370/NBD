@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Trip {
-    @BsonProperty("_id")
+    @BsonProperty("id")
     private final int id;
     @BsonProperty("length")
     private int length;
@@ -20,7 +20,7 @@ public class Trip {
     TransportMean transportMean;
     Accommodation accommodation;
 
-    public Trip(@BsonProperty("_id") int id, @BsonProperty("length") int length, @BsonProperty("name") String name,
+    public Trip(@BsonProperty("id") int id, @BsonProperty("length") int length, @BsonProperty("name") String name,
                 @BsonProperty("transportMean") TransportMean transportMean, Accommodation accommodation) {
         this.id = id;
         this.length = length;

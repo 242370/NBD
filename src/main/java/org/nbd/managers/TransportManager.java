@@ -20,18 +20,18 @@ public class TransportManager {
         return transportMean;
     }
 
-    public void addJet(int maxWeight) {
-        Jet jet = new Jet(maxWeight);
+    public void addJet(int id, int maxWeight) {
+        Jet jet = new Jet(id, maxWeight);
         transportRepo.add(jet);
     }
 
-    public void addScooter(int maxWeight) {
-        Scooter jet = new Scooter(maxWeight);
+    public void addScooter(int id, int maxWeight) {
+        Scooter jet = new Scooter(id, maxWeight);
         transportRepo.add(jet);
     }
 
-    public void addLift(int maxWeight) {
-        Lift jet = new Lift(maxWeight);
+    public void addLift(int id, int maxWeight) {
+        Lift jet = new Lift(id, maxWeight);
         transportRepo.add(jet);
     }
 

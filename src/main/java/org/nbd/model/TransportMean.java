@@ -2,15 +2,17 @@ package org.nbd.model;
 
 import lombok.Getter;
 
+@Getter
 public abstract class TransportMean {
+    private int id;
     private boolean isAvailable = true;
     private final int maxWeight;
 
-    @Getter
     private String type;
 
 
-    public TransportMean(int maxWeight) {
+    public TransportMean(int id, int maxWeight) {
+        this.id = id;
         this.maxWeight = maxWeight;
     }
 

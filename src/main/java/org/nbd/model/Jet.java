@@ -1,8 +1,8 @@
 package org.nbd.model;
 
 public class Jet extends TransportMean{
-    public Jet(int maxWeight) {
-        super(maxWeight);
+    public Jet(int id, int maxWeight) {
+        super(id, maxWeight);
     }
 
     public boolean isPetSupportive()

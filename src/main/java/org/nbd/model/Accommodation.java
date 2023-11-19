@@ -7,7 +7,7 @@ import org.bson.codecs.pojo.annotations.BsonProperty;
 
 @Getter
 public class Accommodation {
-    @BsonProperty("_id")
+    @BsonProperty("id")
     private final int id;
     @BsonProperty("capacity")
     private final double capacity;
@@ -22,7 +22,7 @@ public class Accommodation {
 
     @BsonCreator
 
-    public Accommodation(@BsonProperty("_id") int id, @BsonProperty("capacity") double capacity,
+    public Accommodation(@BsonProperty("id") int id, @BsonProperty("capacity") double capacity,
                          @BsonProperty("pricePerPerson") double pricePerPerson, @BsonProperty("rating") int rating,
                          @BsonProperty("destination") String destination) {
         this.id = id;

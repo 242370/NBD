@@ -6,7 +6,7 @@ import org.bson.codecs.pojo.annotations.BsonProperty;
 
 @Getter
 public class Client {
-    @BsonProperty("_id")
+    @BsonProperty("id")
     private final int id;
     @BsonProperty("name")
     private String firstName;
@@ -20,7 +20,7 @@ public class Client {
     private Pet pet;
 
 
-    public Client(@BsonProperty("_id") int id, @BsonProperty("firstName") String firstName, @BsonProperty("lastName") String lastName,
+    public Client(@BsonProperty("id") int id, @BsonProperty("firstName") String firstName, @BsonProperty("lastName") String lastName,
                   @BsonProperty("weight") int weight) {
         this.id = id;
         this.firstName = firstName;
@@ -29,7 +29,7 @@ public class Client {
     }
 
     @BsonCreator
-    public Client(@BsonProperty("_id") int id, @BsonProperty("firstName") String firstName, @BsonProperty("lastName") String lastName,
+    public Client(@BsonProperty("id") int id, @BsonProperty("firstName") String firstName, @BsonProperty("lastName") String lastName,
                   @BsonProperty("weight") int weight, @BsonProperty("hasPet") boolean hasPet, @BsonProperty("pet") Pet pet) {
         this.id = id;
         this.firstName = firstName;

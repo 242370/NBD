@@ -35,12 +35,12 @@ public class ClientRepo extends AbstractMongoRepo implements IRepo<Client> {
     }
 
     public Client getByID(int id){
-        return this.clients.find(eq("_id", id))
+        return this.clients.find(eq("id", id))
                 .into(new ArrayList<>()).get(0);
     }
 
     public void remove(int id){
-        Bson filter = Filters.eq("_id", id);
+        Bson filter = Filters.eq("id", id);
 
         this.clients.findOneAndDelete(filter);
     }

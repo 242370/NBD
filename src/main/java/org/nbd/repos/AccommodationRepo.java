@@ -37,13 +37,13 @@ public class AccommodationRepo extends AbstractMongoRepo implements IRepo<Accomm
 
     @Override
     public Accommodation getByID(int id) {
-        return this.accommodations.find(eq("_id", id))
+        return this.accommodations.find(eq("id", id))
                 .into(new ArrayList<>()).get(0);
     }
 
     @Override
     public void remove(int id){
-        Bson filter = Filters.eq("_id", id);
+        Bson filter = Filters.eq("id", id);
 
         this.accommodations.findOneAndDelete(filter);
     }
@@ -54,14 +54,14 @@ public class AccommodationRepo extends AbstractMongoRepo implements IRepo<Accomm
     }
 
     public void changePricePerPerson(int id, double newPrice) {
-        Bson filter = Filters.eq("_id", id);
+        Bson filter = Filters.eq("id", id);
         Bson setUpdate = Updates.set("pricePerPerson", newPrice);
 
         this.accommodations.updateOne(filter, setUpdate);
     }
 
     public void changeRating(int id, int newRating) {
-        Bson filter = Filters.eq("_id", id);
+        Bson filter = Filters.eq("id", id);
         Bson setUpdate = Updates.set("rating", newRating);
 
         this.accommodations.updateOne(filter, setUpdate);

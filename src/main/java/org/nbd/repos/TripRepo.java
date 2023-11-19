@@ -33,7 +33,7 @@ public class TripRepo extends AbstractMongoRepo implements IRepo<Trip> {
 
     @Override
     public Trip getByID(int id){
-        return this.getDatabase().getCollection(collectionName, Trip.class).find(eq("_id", id))
+        return this.getDatabase().getCollection(collectionName, Trip.class).find(eq("id", id))
                 .into(new ArrayList<>()).get(0);
     }
 

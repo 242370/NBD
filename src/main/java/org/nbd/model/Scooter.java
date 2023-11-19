@@ -1,8 +1,8 @@
 package org.nbd.model;
 
 public class Scooter extends TransportMean{
-    public Scooter(int maxWeight) {
-        super(maxWeight);
+    public Scooter(int id, int maxWeight) {
+        super(id, maxWeight);
     }
 
     public boolean isPetSupportive()
