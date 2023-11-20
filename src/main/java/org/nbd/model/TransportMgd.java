@@ -21,5 +21,10 @@ public class TransportMgd {
     public TransportMgd(@BsonProperty("id") int id, @BsonProperty("maxWeight") int maxWeight) {
         this.id = id;
         this.maxWeight = maxWeight;
+        this.isAvailable = true;
+    }
+
+    public boolean isPetSupportive() {
+        return true;
     }
 }

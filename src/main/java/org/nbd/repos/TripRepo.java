@@ -1,9 +1,8 @@
 package org.nbd.repos;
 
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoIterable;
-import org.nbd.model.Accommodation;
-import org.nbd.model.Client;
-import org.nbd.model.Trip;
+import org.nbd.model.*;
 
 import java.util.ArrayList;
 
@@ -11,7 +10,7 @@ import static com.mongodb.client.model.Filters.eq;
 
 public class TripRepo extends AbstractMongoRepo implements IRepo<Trip> {
     private final String collectionName = "trips";
-
+    private MongoCollection<TripMgd> trips;
     public TripRepo() {
         super.initDbConnection();
 
@@ -24,17 +23,21 @@ public class TripRepo extends AbstractMongoRepo implements IRepo<Trip> {
         }
 
         this.getDatabase().createCollection(collectionName);
+
+        this.trips = this.getDatabase().getCollection(collectionName, TripMgd.class);
     }
 
     @Override
-    public void add(Trip trip) {
-        // TODO: implementation
+    public void add(Trip trip){
+        trip.getTransportMean().setAvailable(false);
+
+        this.trips.insertOne(TripMapper.toMongoTrip(trip));
     }
 
     @Override
     public Trip getByID(int id){
-        return this.getDatabase().getCollection(collectionName, Trip.class).find(eq("id", id))
-                .into(new ArrayList<>()).get(0);
+        return TripMapper.fromMongoTrip(this.getDatabase().getCollection(collectionName, TripMgd.class).find(eq("id", id))
+                .into(new ArrayList<>()).get(0));
     }
 
     @Override
@@ -49,6 +52,12 @@ public class TripRepo extends AbstractMongoRepo implements IRepo<Trip> {
     }
 
     public void addClientToTrip(Trip trip, Client client) {
-        // TODO: implementation
+        try {
+            trip.addClient(client);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
 }

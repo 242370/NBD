@@ -1,13 +1,17 @@
 package org.nbd.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@NoArgsConstructor
 public class Trip {
     @BsonProperty("id")
-    private final int id;
+    private int id;
     @BsonProperty("length")
     private int length;
     @BsonProperty("name")

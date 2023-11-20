@@ -11,11 +11,17 @@ import java.util.Objects;
 public class TransportMapper {
     public static TransportMean fromMongoTransport(TransportMgd transportMgd) {
         if (Objects.equals(transportMgd.getType(), "Jet")) {
-            return new Jet(transportMgd.getId(), transportMgd.getMaxWeight());
+            Jet jet = new Jet(transportMgd.getId(), transportMgd.getMaxWeight());
+            jet.setAvailable(transportMgd.isAvailable());
+            return jet;
         } else if (Objects.equals(transportMgd.getType(), "Lift")) {
-            return new Lift(transportMgd.getId(), transportMgd.getMaxWeight());
+            Lift lift = new Lift(transportMgd.getId(), transportMgd.getMaxWeight());
+            lift.setAvailable(transportMgd.isAvailable());
+            return lift;
         } else {
-            return new Scooter(transportMgd.getId(), transportMgd.getMaxWeight());
+            Scooter scooter = new Scooter(transportMgd.getId(), transportMgd.getMaxWeight());
+            scooter.setAvailable(transportMgd.isAvailable());
+            return scooter;
         }
     }
 
