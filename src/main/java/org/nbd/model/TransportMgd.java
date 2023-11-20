@@ -12,8 +12,8 @@ public class TransportMgd {
     private int id;
     @BsonProperty("maxWeight")
     private int maxWeight;
-    @BsonProperty("isAvailable")
-    private boolean isAvailable;
+    @BsonProperty("uses")
+    private int uses = 0;
     @BsonProperty("type")
     private String type;
 
@@ -21,7 +21,27 @@ public class TransportMgd {
     public TransportMgd(@BsonProperty("id") int id, @BsonProperty("maxWeight") int maxWeight) {
         this.id = id;
         this.maxWeight = maxWeight;
-        this.isAvailable = true;
+    }
+
+    public boolean isAvailable()
+    {
+        if(uses == 0)
+        {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    public void setAvailable(boolean available) {
+        if(available)
+        {
+            uses = 0;
+        }
+        else
+        {
+            uses++;
+        }
     }
 
     public boolean isPetSupportive() {

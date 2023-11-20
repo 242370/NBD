@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public abstract class TransportMean {
     private int id;
-    private boolean isAvailable = true;
+    private int uses = 0;
     private final int maxWeight;
 
     private String type;
@@ -16,17 +16,30 @@ public abstract class TransportMean {
         this.maxWeight = maxWeight;
     }
 
-    public boolean isAvailable() {
-        return isAvailable;
-    }
 
     public int getMaxWeight() {
         return maxWeight;
     }
 
-
+    public boolean isAvailable()
+    {
+        if(uses == 0)
+        {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
     public void setAvailable(boolean available) {
-        isAvailable = available;
+        if(available)
+        {
+            uses = 0;
+        }
+        else
+        {
+            uses++;
+        }
     }
 
     public abstract boolean isPetSupportive();
