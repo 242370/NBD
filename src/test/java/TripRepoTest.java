@@ -40,58 +40,57 @@ public class TripRepoTest {
         assertEquals(repo.getByID(1).getNumberOfClients(), 1);
     }
 
-//    @Test
-//    void addingClientWithPetToTrip() {
-//        assertDoesNotThrow(() -> repo.add(new Trip(initialID, testlength, testName, testJet, testAccommodation)));
-//        testClient1.addPet("Manat", "Manatee", 4);
-//        assertDoesNotThrow(() -> repo.addClientToTrip(repo.getByID(1), testClient1));
-//        assertEquals(repo.getByID(1).getActualWeight(), 44);
-//        assertEquals(repo.getByID(1).getNumberOfClients(), 1);
-//        assertTrue(repo.getByID(1).getClient(0).hasPet());
-//    }
-//
-//    @Test
-//    void addingClientsToTripMaxWeightFail() {
-//        assertDoesNotThrow(() -> repo.add(new Trip(initialID, testlength, testName, testJet, testAccommodation)));
-//        Trip trip = repo.getByID(1);
-//        repo.addClientToTrip(trip, testClient2);
-//        assertEquals(trip.getNumberOfClients(), 0);
-//    }
-//
-//    @Test
-//    void addingClientsToTripCapacityFail()
-//    {
-//        assertDoesNotThrow(() -> repo.add(new Trip(initialID, testlength, testName, testScooter, testAccommodation)));
-//        Trip trip = repo.getByID(1);
-//        repo.addClientToTrip(trip, testClient1);
-//        repo.addClientToTrip(trip, testClient2);
-//        assertEquals(trip.getNumberOfClients(), 1);
-//    }
-//
-//    @Test
-//    void addingClientWithPetFail()
-//    {
-//        assertDoesNotThrow(() -> repo.add(new Trip(initialID, testlength, testName, testScooter, testAccommodation)));
-//        testClient1.addPet("Manat", "Manatee", 4);
-//        Trip trip = repo.getByID(1);
-//        repo.addClientToTrip(trip, testClient1);
-//        assertEquals(trip.getNumberOfClients(), 0);
-//    }
-//
-//    @Test
-//    void addingTripsIsTransportMeanAvailableFail()
-//    {
-//        assertDoesNotThrow(() -> repo.add(new Trip(initialID, testlength, testName, testScooter, testAccommodation)));
-//        repo.add(new Trip(initialID + 1, testlength, testName, testScooter, testAccommodation));
-//        assertEquals(repo.getSize(), 1);
-//    }
-//    @Test
-//    void removeTripTest() {
-//        assertDoesNotThrow(() -> repo.add(new Trip(initialID, testlength, testName, testScooter, testAccommodation)));
-//        Trip trip = repo.getByID(1);
-//        assertNotNull(trip);
-//        repo.remove(1);
-//        Trip removedTrip = repo.getByID(1);
-//        assertNull(removedTrip);
-//    }
+    @Test
+    void addingClientWithPetToTrip() {
+        assertDoesNotThrow(() -> repo.add(new Trip(initialID, testlength, testName, testJet, testAccommodation)));
+        testClient1.addPet("Manat", "Manatee", 4);
+        assertDoesNotThrow(() -> repo.addClientToTrip(repo.getByID(1), testClient1));
+        assertEquals(repo.getByID(1).getActualWeight(), 44);
+        assertEquals(repo.getByID(1).getNumberOfClients(), 1);
+    }
+
+    @Test
+    void addingClientsToTripMaxWeightFail() {
+        assertDoesNotThrow(() -> repo.add(new Trip(initialID, testlength, testName, testJet, testAccommodation)));
+        Trip trip = repo.getByID(1);
+        repo.addClientToTrip(trip, testClient2);
+        assertEquals(trip.getNumberOfClients(), 0);
+    }
+
+    @Test
+    void addingClientsToTripCapacityFail()
+    {
+        assertDoesNotThrow(() -> repo.add(new Trip(initialID, testlength, testName, testScooter, testAccommodation)));
+        Trip trip = repo.getByID(1);
+        repo.addClientToTrip(trip, testClient1);
+        repo.addClientToTrip(trip, testClient2);
+        assertEquals(trip.getNumberOfClients(), 1);
+    }
+
+    @Test
+    void addingClientWithPetFail()
+    {
+        assertDoesNotThrow(() -> repo.add(new Trip(initialID, testlength, testName, testScooter, testAccommodation)));
+        testClient1.addPet("Manat", "Manatee", 4);
+        Trip trip = repo.getByID(1);
+        repo.addClientToTrip(trip, testClient1);
+        assertEquals(trip.getNumberOfClients(), 0);
+    }
+
+    @Test
+    void addingTripsIsTransportMeanAvailableFail()
+    {
+        assertDoesNotThrow(() -> repo.add(new Trip(initialID, testlength, testName, testScooter, testAccommodation)));
+        repo.add(new Trip(initialID + 1, testlength, testName, testScooter, testAccommodation));
+        assertEquals(repo.getSize(), 1);
+    }
+    @Test
+    void removeTripTest() {
+        assertDoesNotThrow(() -> repo.add(new Trip(initialID, testlength, testName, testScooter, testAccommodation)));
+        Trip trip = repo.getByID(1);
+        assertNotNull(trip);
+        repo.remove(1);
+        Trip removedTrip = repo.getByID(1);
+        assertNull(removedTrip);
+    }
 }

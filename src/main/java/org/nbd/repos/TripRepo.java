@@ -2,6 +2,9 @@ package org.nbd.repos;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoIterable;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
+import org.bson.conversions.Bson;
 import org.nbd.model.*;
 
 import java.util.ArrayList;
@@ -42,7 +45,9 @@ public class TripRepo extends AbstractMongoRepo implements IRepo<Trip> {
 
     @Override
     public void remove(int id){
-        // TODO: implementation
+        Bson filter = Filters.eq("id", id);
+
+        this.trips.findOneAndDelete(filter);
     }
 
     @Override
@@ -54,6 +59,13 @@ public class TripRepo extends AbstractMongoRepo implements IRepo<Trip> {
     public void addClientToTrip(Trip trip, Client client) {
         try {
             trip.addClient(client);
+            client.setTrip_id(trip.getId());
+            Bson filter = Filters.eq("id", trip.getId());
+            Bson setClientsUpdate = Updates.set("clients", trip.getClients());
+            Bson setWeightUpdate = Updates.set("actualWeight", trip.getActualWeight());
+
+            this.trips.updateOne(filter, setClientsUpdate);
+            this.trips.updateOne(filter, setWeightUpdate);
         }
         catch (Exception e)
         {

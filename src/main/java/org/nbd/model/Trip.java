@@ -2,6 +2,7 @@ package org.nbd.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 
 import java.util.ArrayList;
@@ -16,10 +17,12 @@ public class Trip {
     private int length;
     @BsonProperty("name")
     private String name;
+    @Setter
     @BsonProperty("actualWeight")
     private int actualWeight = 0;
 
-    private List<Client> clients = new ArrayList<>();
+    @Setter
+    private int clients = 0;
     @BsonProperty("transportMean")
     TransportMean transportMean;
     Accommodation accommodation;
@@ -53,21 +56,14 @@ public class Trip {
         return accommodation;
     }
 
-    public Client getClient(int index) {
-        return clients.get(index);
-    }
 
     public int getNumberOfClients() {
-        return clients.size();
+        return this.clients;
     }
 
-    public double calculateCost() {
-        return clients.size() * accommodation.getPricePerPerson();
-    }
+    public void addClient(Client customer) throws Exception {
 
-    public boolean addClient(Client customer) throws Exception {
-
-        if (clients.size() + 1 > this.accommodation.getCapacity()) {
+        if (clients + 1 > this.accommodation.getCapacity()) {
             throw new Exception("Capacity not enough");
         }
 
@@ -78,6 +74,6 @@ public class Trip {
             throw new Exception("Transport not pet supportive");
         }
         this.actualWeight += customer.getWeight();
-        return clients.add(customer);
+        clients++;
     }
 }

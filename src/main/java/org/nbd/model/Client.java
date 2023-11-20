@@ -1,6 +1,7 @@
 package org.nbd.model;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 
@@ -18,6 +19,9 @@ public class Client {
     private boolean hasPet = false;
     @BsonProperty("pet")
     private Pet pet;
+    @Setter
+    @BsonProperty("trip_id")
+    private int trip_id;
 
 
     public Client(@BsonProperty("id") int id, @BsonProperty("firstName") String firstName, @BsonProperty("lastName") String lastName,
@@ -30,14 +34,17 @@ public class Client {
 
     @BsonCreator
     public Client(@BsonProperty("id") int id, @BsonProperty("firstName") String firstName, @BsonProperty("lastName") String lastName,
-                  @BsonProperty("weight") int weight, @BsonProperty("hasPet") boolean hasPet, @BsonProperty("pet") Pet pet) {
+                  @BsonProperty("weight") int weight, @BsonProperty("hasPet") boolean hasPet, @BsonProperty("pet") Pet pet
+            , @BsonProperty("trip_id") int trip_id) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.weight = weight;
         this.hasPet = hasPet;
         this.pet = pet;
+        this.trip_id = trip_id;
     }
+
     public String getFirstName() {
         return firstName;
     }
