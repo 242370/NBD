@@ -70,13 +70,27 @@ public class TripRepo extends AbstractMongoRepo implements IRepo<Trip> {
 
     @Override
     public void remove(int id) {
-        Bson tripFilter = Filters.eq("id", id);
+        ClientSession session = getClient().startSession();
+        try {
+            session.startTransaction();
 
-        Bson transportFilter = Filters.eq("id", this.getByID(id).getTransportMean().getId());
-        Bson update = Updates.inc("uses" , -1);
-        this.getDatabase().getCollection("transportMeans").updateOne(transportFilter, update);
+            Bson tripFilter = Filters.eq("id", id);
 
-        this.trips.findOneAndDelete(tripFilter);
+            Bson transportFilter = Filters.eq("id", this.getByID(id).getTransportMean().getId());
+            Bson update = Updates.inc("uses" , -1);
+            this.getDatabase().getCollection("transportMeans").updateOne(transportFilter, update);
+
+            this.trips.findOneAndDelete(tripFilter);
+
+            session.commitTransaction();
+            session.close();
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            session.abortTransaction();
+            session.close();
+        }
     }
 
     @Override
@@ -85,7 +99,10 @@ public class TripRepo extends AbstractMongoRepo implements IRepo<Trip> {
     }
 
     public void addClientToTrip(Trip trip, Client client) {
+        ClientSession session = getClient().startSession();
         try {
+            session.startTransaction();
+
             trip.addClient(client);
             client.setTrip_id(trip.getId());
             Bson filter = Filters.eq("id", trip.getId());
@@ -94,8 +111,13 @@ public class TripRepo extends AbstractMongoRepo implements IRepo<Trip> {
 
             this.trips.updateOne(filter, setClientsUpdate);
             this.trips.updateOne(filter, setWeightUpdate);
+
+            session.commitTransaction();
+            session.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            session.abortTransaction();
+            session.close();
         }
     }
 }
