@@ -45,6 +45,7 @@ public class TripRepoTest {
 
         assertEquals(repo.getByID(1).getActualWeight(), 40);
         assertEquals(repo.getByID(1).getNumberOfClients(), 1);
+        assertEquals(testClient1.getTrip_id(), initialID);
 
         Bson filter = Filters.eq("id", repo.getByID(1).getTransportMean().getId());
         Bson update = Updates.inc("uses" , -1);
