@@ -7,7 +7,7 @@ public class Scooter extends TransportMean{
 
     public boolean isPetSupportive()
     {
-        return true;
+        return false;
     }
 
     public String getType()

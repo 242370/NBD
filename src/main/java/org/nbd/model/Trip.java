@@ -70,7 +70,7 @@ public class Trip {
         if (this.actualWeight + customer.getWeight() > this.transportMean.getMaxWeight()) {
             throw new Exception("Weight too much");
         }
-        if (customer.hasPet() && this.transportMean.isPetSupportive()) {
+        if (customer.hasPet() && !this.transportMean.isPetSupportive()) {
             throw new Exception("Transport not pet supportive");
         }
         this.actualWeight += customer.getWeight();
