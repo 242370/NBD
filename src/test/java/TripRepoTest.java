@@ -16,7 +16,7 @@ public class TripRepoTest {
     int initialID = 1;
     TransportMean testJet = new Jet(initialID + 8, 55);
 
-    TransportMean testScooter = new Scooter(initialID + 9, 100);
+    TransportMean testScooter = new Scooter(initialID + 18, 100);
     Accommodation testAccommodation = new Accommodation(initialID, 1.5, 100.0, 4, "Zgierz");
     Client testClient1 = new Client(initialID, "Rafal", "Cyberbully", 40);
     Client testClient2 = new Client(initialID + 1, "Adam", "Kruszynski", 56);
