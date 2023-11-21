@@ -14,13 +14,18 @@ public class ProgramInstance {
         TravelAgency sharkTours = new TravelAgency(1000);
         System.out.println("Welcome to Shark Tours!");
 
-        try (ClientRepo repo = new ClientRepo()) {
-            Client client = new Client(1, "Rafal", "Cyberbully", 50);
-            repo.add(client);
-            System.out.println(repo.getByID(1).getLastName());
+        try {
+            sharkTours.getAccommodationManager().addPlace(1, 2.5, 5.0, 2, "Stare Poesies");
+            System.out.println(sharkTours.getAccommodationManager().getByID(1).toString());
+
+            sharkTours.getClientManager().addClient(1, "Rafal", "Cyberbully", 75);
+            System.out.println(sharkTours.getClientManager().getByID(1).toString());
+
+            sharkTours.getClientManager().addClientWithPet(2, "Adam", "Kruszynski", 70,
+                    "Tytus", "Cat", 5);
+            System.out.println(sharkTours.getClientManager().getByID(2).toString());
         } catch (Exception e) {
-            System.out.println("oops:\n" + e);
+            System.out.println(e.getMessage());
         }
-        // TODO: testing env
     }
 }

@@ -5,16 +5,18 @@ import lombok.Setter;
 import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 
+import java.io.Serializable;
+
 @Getter
-public class Client {
+public class Client implements Serializable {
     @BsonProperty("id")
     private final int id;
     @BsonProperty("name")
-    private String firstName;
+    private final String firstName;
     @BsonProperty("lastName")
-    private String lastName;
+    private final String lastName;
     @BsonProperty("weight")
-    private int weight;
+    private final int weight;
     @BsonProperty("hasPet")
     private boolean hasPet = false;
     @BsonProperty("pet")
@@ -24,8 +26,7 @@ public class Client {
     private int trip_id;
 
 
-    public Client(@BsonProperty("id") int id, @BsonProperty("firstName") String firstName, @BsonProperty("lastName") String lastName,
-                  @BsonProperty("weight") int weight) {
+    public Client(int id, String firstName, String lastName, int weight) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -72,5 +73,25 @@ public class Client {
         Pet newPet = new Pet(name, species, weight);
         this.hasPet = true;
         this.pet = newPet;
+    }
+
+    public String toString() {
+        if (hasPet) {
+            return "ID: " + getId() + "\n" +
+                    "name: " + getFirstName() + "\n" +
+                    "last name: " + getLastName() + "\n" +
+                    "weight (with pet): " + getWeight() + "\n" +
+                    "has pet: " + hasPet() + "\n" +
+                    "pet name: " + getPet().getPetName() + "\n" +
+                    "pet species: " + getPet().getSpecies() + "\n" +
+                    "trip ID: " + getTrip_id() + "\n";
+        } else {
+            return "ID: " + getId() + "\n" +
+                    "name: " + getFirstName() + "\n" +
+                    "last name: " + getLastName() + "\n" +
+                    "weight: " + getWeight() + "\n" +
+                    "has pet: " + hasPet() + "\n" +
+                    "trip ID: " + getTrip_id() + "\n";
+        }
     }
 }
