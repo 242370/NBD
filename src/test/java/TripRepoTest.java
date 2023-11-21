@@ -25,7 +25,7 @@ public class TripRepoTest {
     void addingTripsTest() {
         assertDoesNotThrow(() -> repo.add(new Trip(initialID, testlength, testName, testJet, testAccommodation)));
 
-        Trip trip = repo.getByID(1);
+        Trip trip = repo.getByID(initialID);
 
         assertNotNull(trip);
         assertEquals(trip.getActualWeight(), 0);
@@ -33,9 +33,7 @@ public class TripRepoTest {
         assertEquals(trip.getName(), testName);
         assertEquals(trip.getNumberOfClients(), 0);
 
-        Bson filter = Filters.eq("id", repo.getByID(1).getTransportMean().getId());
-        Bson update = Updates.inc("uses" , -1);
-        this.repo.getDatabase().getCollection("transportMeans").updateOne(filter, update);
+        repo.remove(initialID);
     }
 
     @Test
@@ -43,13 +41,11 @@ public class TripRepoTest {
         assertDoesNotThrow(() -> repo.add(new Trip(initialID, testlength, testName, testJet, testAccommodation)));
         assertDoesNotThrow(() -> repo.addClientToTrip(repo.getByID(1), testClient1));
 
-        assertEquals(repo.getByID(1).getActualWeight(), 40);
-        assertEquals(repo.getByID(1).getNumberOfClients(), 1);
+        assertEquals(repo.getByID(initialID).getActualWeight(), 40);
+        assertEquals(repo.getByID(initialID).getNumberOfClients(), 1);
         assertEquals(testClient1.getTrip_id(), initialID);
 
-        Bson filter = Filters.eq("id", repo.getByID(1).getTransportMean().getId());
-        Bson update = Updates.inc("uses" , -1);
-        this.repo.getDatabase().getCollection("transportMeans").updateOne(filter, update);
+        repo.remove(initialID);
     }
 
     @Test
@@ -57,38 +53,32 @@ public class TripRepoTest {
         assertDoesNotThrow(() -> repo.add(new Trip(initialID, testlength, testName, testJet, testAccommodation)));
         testClient1.addPet("Manat", "Manatee", 4);
         assertDoesNotThrow(() -> repo.addClientToTrip(repo.getByID(1), testClient1));
-        assertEquals(repo.getByID(1).getActualWeight(), 44);
-        assertEquals(repo.getByID(1).getNumberOfClients(), 1);
+        assertEquals(repo.getByID(initialID).getActualWeight(), 44);
+        assertEquals(repo.getByID(initialID).getNumberOfClients(), 1);
 
-        Bson filter = Filters.eq("id", repo.getByID(1).getTransportMean().getId());
-        Bson update = Updates.inc("uses" , -1);
-        this.repo.getDatabase().getCollection("transportMeans").updateOne(filter, update);
+        repo.remove(initialID);
     }
 
     @Test
     void addingClientsToTripMaxWeightFail() {
         assertDoesNotThrow(() -> repo.add(new Trip(initialID, testlength, testName, testJet, testAccommodation)));
-        Trip trip = repo.getByID(1);
+        Trip trip = repo.getByID(initialID);
         repo.addClientToTrip(trip, testClient2);
         assertEquals(trip.getNumberOfClients(), 0);
 
-        Bson filter = Filters.eq("id", repo.getByID(1).getTransportMean().getId());
-        Bson update = Updates.inc("uses" , -1);
-        this.repo.getDatabase().getCollection("transportMeans").updateOne(filter, update);
+        repo.remove(initialID);
     }
 
     @Test
     void addingClientsToTripCapacityFail()
     {
         assertDoesNotThrow(() -> repo.add(new Trip(initialID, testlength, testName, testScooter, testAccommodation)));
-        Trip trip = repo.getByID(1);
+        Trip trip = repo.getByID(initialID);
         repo.addClientToTrip(trip, testClient1);
         repo.addClientToTrip(trip, testClient2);
         assertEquals(trip.getNumberOfClients(), 1);
 
-        Bson filter = Filters.eq("id", repo.getByID(1).getTransportMean().getId());
-        Bson update = Updates.inc("uses" , -1);
-        this.repo.getDatabase().getCollection("transportMeans").updateOne(filter, update);
+        repo.remove(initialID);
     }
 
     @Test
@@ -96,13 +86,11 @@ public class TripRepoTest {
     {
         assertDoesNotThrow(() -> repo.add(new Trip(initialID, testlength, testName, testScooter, testAccommodation)));
         testClient1.addPet("Manat", "Manatee", 4);
-        Trip trip = repo.getByID(1);
+        Trip trip = repo.getByID(initialID);
         repo.addClientToTrip(trip, testClient1);
         assertEquals(trip.getNumberOfClients(), 0);
 
-        Bson filter = Filters.eq("id", repo.getByID(1).getTransportMean().getId());
-        Bson update = Updates.inc("uses" , -1);
-        this.repo.getDatabase().getCollection("transportMeans").updateOne(filter, update);
+        repo.remove(initialID);
     }
 
     @Test
@@ -112,21 +100,15 @@ public class TripRepoTest {
         repo.add(new Trip(initialID + 1, testlength, testName, testScooter, testAccommodation));
         assertEquals(repo.getSize(), 1);
 
-        Bson filter = Filters.eq("id", repo.getByID(1).getTransportMean().getId());
-        Bson update = Updates.inc("uses" , -1);
-        this.repo.getDatabase().getCollection("transportMeans").updateOne(filter, update);
+        repo.remove(initialID);
     }
     @Test
     void removeTripTest() {
         assertDoesNotThrow(() -> repo.add(new Trip(initialID, testlength, testName, testScooter, testAccommodation)));
-        Trip trip = repo.getByID(1);
+        Trip trip = repo.getByID(initialID);
         assertNotNull(trip);
 
-        Bson filter = Filters.eq("id", repo.getByID(1).getTransportMean().getId());
-        Bson update = Updates.inc("uses" , -1);
-        this.repo.getDatabase().getCollection("transportMeans").updateOne(filter, update);
-
-        repo.remove(1);
+        repo.remove(initialID);
         Trip removedTrip;
         try
         {

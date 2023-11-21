@@ -70,9 +70,13 @@ public class TripRepo extends AbstractMongoRepo implements IRepo<Trip> {
 
     @Override
     public void remove(int id) {
-        Bson filter = Filters.eq("id", id);
+        Bson tripFilter = Filters.eq("id", id);
 
-        this.trips.findOneAndDelete(filter);
+        Bson transportFilter = Filters.eq("id", this.getByID(id).getTransportMean().getId());
+        Bson update = Updates.inc("uses" , -1);
+        this.getDatabase().getCollection("transportMeans").updateOne(transportFilter, update);
+
+        this.trips.findOneAndDelete(tripFilter);
     }
 
     @Override
