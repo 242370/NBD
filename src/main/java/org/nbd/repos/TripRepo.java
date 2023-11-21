@@ -1,5 +1,6 @@
 package org.nbd.repos;
 
+import com.mongodb.client.ClientSession;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoIterable;
 import com.mongodb.client.model.Filters;
@@ -14,6 +15,7 @@ import static com.mongodb.client.model.Filters.eq;
 public class TripRepo extends AbstractMongoRepo implements IRepo<Trip> {
     private final String collectionName = "trips";
     private MongoCollection<TripMgd> trips;
+
     public TripRepo() {
         super.initDbConnection();
 
@@ -31,20 +33,43 @@ public class TripRepo extends AbstractMongoRepo implements IRepo<Trip> {
     }
 
     @Override
-    public void add(Trip trip){
-        trip.getTransportMean().setAvailable(false);
+    public void add(Trip trip) {
+        MongoCollection<TransportMgd> transportCollection = this.getDatabase().getCollection("transportMeans", TransportMgd.class);
+        ClientSession session = getClient().startSession();
 
-        this.trips.insertOne(TripMapper.toMongoTrip(trip));
+        Bson filter = Filters.eq("id", trip.getTransportMean().getId());
+        Bson update = Updates.inc("uses", 1);
+
+        if(transportCollection.find(filter).into(new ArrayList<>()).isEmpty())
+        {
+            transportCollection.insertOne(TransportMapper.toMongoTransport(trip.getTransportMean()));
+        }
+
+        try {
+            session.startTransaction();
+
+            this.getDatabase().getCollection("transportMeans").updateOne(filter, update);
+            this.trips.insertOne(TripMapper.toMongoTrip(trip));
+
+            session.commitTransaction();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("Wanted transport mean is unavailable");
+            session.abortTransaction();
+            session.close();
+        }
+        // trip.getTransportMean().setAvailable(false);
+
     }
 
     @Override
-    public Trip getByID(int id){
+    public Trip getByID(int id) {
         return TripMapper.fromMongoTrip(this.getDatabase().getCollection(collectionName, TripMgd.class).find(eq("id", id))
                 .into(new ArrayList<>()).get(0));
     }
 
     @Override
-    public void remove(int id){
+    public void remove(int id) {
         Bson filter = Filters.eq("id", id);
 
         this.trips.findOneAndDelete(filter);
@@ -65,9 +90,7 @@ public class TripRepo extends AbstractMongoRepo implements IRepo<Trip> {
 
             this.trips.updateOne(filter, setClientsUpdate);
             this.trips.updateOne(filter, setWeightUpdate);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
