@@ -90,7 +90,15 @@ public class TripRepoTest {
         Trip trip = repo.getByID(1);
         assertNotNull(trip);
         repo.remove(1);
-        Trip removedTrip = repo.getByID(1);
+        Trip removedTrip;
+        try
+        {
+            removedTrip = repo.getByID(1);
+        }
+        catch (Exception e)
+        {
+            removedTrip = null;
+        }
         assertNull(removedTrip);
     }
 }

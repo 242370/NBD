@@ -40,7 +40,7 @@ public abstract class AbstractMongoRepo implements AutoCloseable{
                 .build();
 
         client = MongoClients.create(settings);
-        database = client.getDatabase("admin");
+        database = client.getDatabase("mongo");
     }
 
     @Override

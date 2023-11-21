@@ -45,6 +45,12 @@ public class TransportMgd {
     }
 
     public boolean isPetSupportive() {
-        return true;
+       if(this.getType() == "Scooter")
+       {
+           return false;
+       }
+       else {
+           return true;
+       }
     }
 }

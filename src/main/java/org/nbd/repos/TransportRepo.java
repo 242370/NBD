@@ -2,7 +2,10 @@ package org.nbd.repos;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoIterable;
+import com.mongodb.client.model.CreateCollectionOptions;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.ValidationOptions;
+import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.nbd.model.Client;
 import org.nbd.model.TransportMapper;
@@ -28,7 +31,27 @@ public class TransportRepo extends AbstractMongoRepo implements IRepo<TransportM
             }
         }
 
-        this.getDatabase().createCollection(collectionName);
+        ValidationOptions validationOptions = new ValidationOptions().validator(
+                Document.parse("""
+                        {
+                            '$jsonSchema': {
+                              "bsonType": "object",
+                               "required": [ "uses" ],
+                               "properties": {
+                                   "uses": {
+                                      "bsonType": "int",
+                                      "minimum": 0,
+                                      "maximum": 1
+                                    }
+                                }
+                            }
+                        }
+                        """)
+        );
+
+        CreateCollectionOptions collectionOptions = new CreateCollectionOptions().validationOptions(validationOptions);
+
+        this.getDatabase().createCollection(collectionName, collectionOptions);
 
         this.transportMeans = this.getDatabase().getCollection(collectionName, TransportMgd.class);
     }

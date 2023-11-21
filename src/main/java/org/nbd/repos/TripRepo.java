@@ -52,8 +52,7 @@ public class TripRepo extends AbstractMongoRepo implements IRepo<Trip> {
 
     @Override
     public long getSize() {
-        // TODO: implementation
-        return 0;
+        return this.trips.countDocuments();
     }
 
     public void addClientToTrip(Trip trip, Client client) {
