@@ -7,7 +7,6 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 import lombok.Getter;
-import lombok.Setter;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.Conventions;
@@ -16,7 +15,7 @@ import org.bson.codecs.pojo.PojoCodecProvider;
 import java.util.List;
 
 @Getter
-public abstract class AbstractMongoRepo implements AutoCloseable{
+public abstract class AbstractMongoRepo implements AutoCloseable {
     private static final ConnectionString connectionString = new ConnectionString(
             "mongodb://localhost:27017,localhost:27018,localhost:27019/?replicaSet=replica_set_single");
     private final MongoCredential credential = MongoCredential.createCredential(

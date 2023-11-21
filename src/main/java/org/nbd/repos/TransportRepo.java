@@ -7,7 +7,6 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.ValidationOptions;
 import org.bson.Document;
 import org.bson.conversions.Bson;
-import org.nbd.model.Client;
 import org.nbd.model.TransportMapper;
 import org.nbd.model.TransportMean;
 import org.nbd.model.TransportMgd;
@@ -18,7 +17,7 @@ import static com.mongodb.client.model.Filters.eq;
 
 public class TransportRepo extends AbstractMongoRepo implements IRepo<TransportMean> {
     private final String collectionName = "transportMeans";
-    private MongoCollection<TransportMgd> transportMeans;
+    private final MongoCollection<TransportMgd> transportMeans;
 
     public TransportRepo() {
         super.initDbConnection();
@@ -75,7 +74,6 @@ public class TransportRepo extends AbstractMongoRepo implements IRepo<TransportM
 
 
     public long getSize() {
-        // TODO: implementation
-        return 0;
+        return transportMeans.countDocuments();
     }
 }

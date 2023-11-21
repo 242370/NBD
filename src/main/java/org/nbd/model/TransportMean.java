@@ -2,8 +2,10 @@ package org.nbd.model;
 
 import lombok.Getter;
 
+import java.io.Serializable;
+
 @Getter
-public abstract class TransportMean {
+public abstract class TransportMean implements Serializable {
     private int id;
     private int uses = 0;
     private final int maxWeight;
@@ -21,26 +23,29 @@ public abstract class TransportMean {
         return maxWeight;
     }
 
-    public boolean isAvailable()
-    {
-        if(uses == 0)
-        {
+    public boolean isAvailable() {
+        if (uses == 0) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
+
     public void setAvailable(boolean available) {
-        if(available)
-        {
+        if (available) {
             uses = 0;
-        }
-        else
-        {
+        } else {
             uses++;
         }
     }
 
     public abstract boolean isPetSupportive();
+
+    @Override
+    public String toString() {
+        return "ID: " + getId() + "\n" +
+                "isAvailable: " + isAvailable() + "\n" +
+                "max weight: " + getMaxWeight() + "\n" +
+                "type: " + getType() + "\n";
+    }
 }

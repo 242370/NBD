@@ -1,11 +1,5 @@
 package org.nbd.model;
 
-import org.nbd.model.Jet;
-
-import org.bson.Document;
-import org.nbd.model.Lift;
-import org.nbd.model.Scooter;
-
 import java.util.Objects;
 
 public class TransportMapper {

@@ -14,7 +14,7 @@ import static com.mongodb.client.model.Filters.eq;
 
 public class TripRepo extends AbstractMongoRepo implements IRepo<Trip> {
     private final String collectionName = "trips";
-    private MongoCollection<TripMgd> trips;
+    private final MongoCollection<TripMgd> trips;
 
     public TripRepo() {
         super.initDbConnection();
@@ -40,8 +40,7 @@ public class TripRepo extends AbstractMongoRepo implements IRepo<Trip> {
         Bson filter = Filters.eq("id", trip.getTransportMean().getId());
         Bson update = Updates.inc("uses", 1);
 
-        if(transportCollection.find(filter).into(new ArrayList<>()).isEmpty())
-        {
+        if (transportCollection.find(filter).into(new ArrayList<>()).isEmpty()) {
             transportCollection.insertOne(TransportMapper.toMongoTransport(trip.getTransportMean()));
         }
 
@@ -77,16 +76,14 @@ public class TripRepo extends AbstractMongoRepo implements IRepo<Trip> {
             Bson tripFilter = Filters.eq("id", id);
 
             Bson transportFilter = Filters.eq("id", this.getByID(id).getTransportMean().getId());
-            Bson update = Updates.inc("uses" , -1);
+            Bson update = Updates.inc("uses", -1);
             this.getDatabase().getCollection("transportMeans").updateOne(transportFilter, update);
 
             this.trips.findOneAndDelete(tripFilter);
 
             session.commitTransaction();
             session.close();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             session.abortTransaction();
             session.close();

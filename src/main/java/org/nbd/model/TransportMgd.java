@@ -5,6 +5,8 @@ import lombok.Setter;
 import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 
+import java.util.Objects;
+
 @Getter
 @Setter
 public class TransportMgd {
@@ -25,13 +27,7 @@ public class TransportMgd {
 
     public boolean isAvailable()
     {
-        if(uses == 0)
-        {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return uses == 0;
     }
     public void setAvailable(boolean available) {
         if(available)
@@ -45,12 +41,6 @@ public class TransportMgd {
     }
 
     public boolean isPetSupportive() {
-       if(this.getType() == "Scooter")
-       {
-           return false;
-       }
-       else {
-           return true;
-       }
+        return !Objects.equals(this.getType(), "Scooter");
     }
 }

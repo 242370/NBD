@@ -13,7 +13,7 @@ import static com.mongodb.client.model.Filters.eq;
 
 public class AccommodationRepo extends AbstractMongoRepo implements IRepo<Accommodation> {
     private final String collectionName = "accommodations";
-    private MongoCollection<Accommodation> accommodations;
+    private final MongoCollection<Accommodation> accommodations;
 
     public AccommodationRepo() {
         super.initDbConnection();
@@ -49,8 +49,7 @@ public class AccommodationRepo extends AbstractMongoRepo implements IRepo<Accomm
     }
 
     public long getSize() {
-        // TODO: implementation
-        return 0;
+        return accommodations.countDocuments();
     }
 
     public void changePricePerPerson(int id, double newPrice) {
