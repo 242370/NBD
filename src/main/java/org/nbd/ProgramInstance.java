@@ -1,7 +1,9 @@
 package org.nbd;
 
+import org.nbd.model.CashedAccommodation;
 import org.nbd.model.Client;
 import org.nbd.model.TravelAgency;
+import org.nbd.repos.AccommodationRepoRedis;
 
 public class ProgramInstance {
     public static void main(String[] args) {
@@ -9,27 +11,18 @@ public class ProgramInstance {
         System.out.println("Welcome to Shark Tours!");
 
         try {
-            sharkTours.getAccommodationManager().addPlace(1, 2.5, 5.0, 2, "Stare Poesies");
-            System.out.println(sharkTours.getAccommodationManager().getByID(1).toString());
+            AccommodationRepoRedis repo = new AccommodationRepoRedis();
 
-            sharkTours.getClientManager().addClient(1, "Rafal", "Cyberbully", 75);
-            System.out.println(sharkTours.getClientManager().getByID(1).toString());
+            CashedAccommodation accommodation = new CashedAccommodation(0, 3.0, 5.0, 4, "Stare Poesies");
 
-            sharkTours.getClientManager().addClientWithPet(2, "Adam", "Kruszynski", 70,
-                    "Tytus", "Cat", 5);
-            System.out.println(sharkTours.getClientManager().getByID(2).toString());
+            System.out.println(accommodation.toString());
+            System.out.println();
 
-            sharkTours.getTransportManager().addJet(1, 100);
-            System.out.println(sharkTours.getTransportManager().getByID(1).toString());
+            repo.putInCache(accommodation);
 
-            Client client = new Client(3, "Smoli", "Wańczyk", 33);
-            System.out.println(client.toString());
-            sharkTours.getTripManager().addTrip(1, 7, "Wakacja",
-                    sharkTours.getTransportManager().getByID(1), sharkTours.getAccommodationManager().getByID(1));
-            sharkTours.getTripManager().addClientToTrip(client, sharkTours.getTripManager().getByID(1));
-            System.out.println(client.toString());
+            CashedAccommodation newAccommodation = repo.getFromCache(0);
 
-            System.out.println(sharkTours.getTransportManager().getByID(1).toString());
+            System.out.println(newAccommodation.toString());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
