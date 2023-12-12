@@ -2,11 +2,13 @@ package org.nbd.repos;
 
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
+import lombok.Getter;
 import org.nbd.model.Accommodation;
 import org.nbd.model.CashedAccommodation;
 import org.nbd.model.RedisInit;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 
+@Getter
 public class AccommodationRepoRedis extends AccommodationRepo {
     private AccommodationRepo repo = new AccommodationRepo();
     private RedisInit redisInit;
