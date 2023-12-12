@@ -6,7 +6,8 @@ import org.nbd.model.Accommodation;
 import org.nbd.model.CashedAccommodation;
 import org.nbd.model.RedisInit;
 
-public class AccommodationRepoRedis {
+public class AccommodationRepoRedis extends AccommodationRepo {
+    private AccommodationRepo repo = new AccommodationRepo();
     private RedisInit redisInit;
     private Jsonb jsonb;
     private int expirationTime;
@@ -43,5 +44,41 @@ public class AccommodationRepoRedis {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public CashedAccommodation convertToRedisObject(Accommodation hotel) {
+        return new CashedAccommodation(hotel.getId(), hotel.getCapacity(), hotel.getPricePerPerson(), hotel.getRating(), hotel.getDestination());
+    }
+
+    public Accommodation convertToObjectRedis(CashedAccommodation hotel) {
+        return new Accommodation(hotel.getId(), hotel.getCapacity(), hotel.getPricePerPerson(), hotel.getRating(), hotel.getDestination());
+    }
+
+    @Override
+    public void add(Accommodation hotel) {
+        super.add(hotel);
+        this.putInCache(this.convertToRedisObject(hotel));
+    }
+
+    @Override
+    public Accommodation getByID(int id) {
+        Accommodation accommodation = null;
+        try {
+            accommodation = this.convertToObjectRedis(this.getFromCache(id));
+        } catch (Exception e) {
+            this.putInCache(this.convertToRedisObject(super.getByID(id)));
+            try {
+                accommodation = this.convertToObjectRedis(this.getFromCache(id));
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        return accommodation;
+    }
+
+    @Override
+    public void remove(int id) {
+        super.remove(id);
+        this.deleteFromCache(id);
     }
 }

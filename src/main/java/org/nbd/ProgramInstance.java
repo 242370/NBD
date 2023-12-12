@@ -1,5 +1,6 @@
 package org.nbd;
 
+import org.nbd.model.Accommodation;
 import org.nbd.model.CashedAccommodation;
 import org.nbd.model.Client;
 import org.nbd.model.TravelAgency;
@@ -13,20 +14,24 @@ public class ProgramInstance {
         try {
             AccommodationRepoRedis repo = new AccommodationRepoRedis(900);
 
-            CashedAccommodation accommodation = new CashedAccommodation(0, 3.0, 5.0, 4, "Stare Poesies");
+            Accommodation accommodation = new Accommodation(0, 3.0, 5.0, 4, "Stare Poesies");
 
             System.out.println(accommodation.toString());
             System.out.println();
 
-            repo.putInCache(accommodation);
+            repo.add(accommodation);
 
-            CashedAccommodation newAccommodation = repo.getFromCache(0);
+            Accommodation newAccommodation = repo.getByID(0);
 
             System.out.println(newAccommodation.toString());
 
-            repo.deleteFromCache(0);
+            repo.remove(0);
 
-            newAccommodation = repo.getFromCache(0);
+            newAccommodation = repo.getByID(0);
+            if(newAccommodation != null)
+            {
+                System.out.println("Something went wrong");
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
