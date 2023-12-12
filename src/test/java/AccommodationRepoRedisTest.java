@@ -64,8 +64,7 @@ public class AccommodationRepoRedisTest {
     }
 
     @Test
-    public void gettingDataFromDatabase()
-    {
+    public void gettingDataFromDatabase() {
         try {
             assertDoesNotThrow(() -> repo.add(repo.convertToObjectRedis(this.testAccommodation)));
             CashedAccommodation accommodation = repo.getFromCache(this.testID);
@@ -74,15 +73,12 @@ public class AccommodationRepoRedisTest {
             assertNull(repo.getFromCache(this.testID));
 
             assertEquals(accommodation, repo.convertToRedisObject(repo.getByID(this.testID)));
-        }
-        catch (JedisConnectionException j_e)
-        {
+        } catch (JedisConnectionException j_e) {
             assertNotNull(repo.getByID(this.testID));
+
             System.out.println("Taken from database: ");
             System.out.println(repo.getByID(this.testID).toString());
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
