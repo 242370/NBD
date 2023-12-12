@@ -5,6 +5,7 @@ import jakarta.json.bind.JsonbBuilder;
 import org.nbd.model.Accommodation;
 import org.nbd.model.CashedAccommodation;
 import org.nbd.model.RedisInit;
+import redis.clients.jedis.exceptions.JedisConnectionException;
 
 public class AccommodationRepoRedis extends AccommodationRepo {
     private AccommodationRepo repo = new AccommodationRepo();
@@ -65,7 +66,13 @@ public class AccommodationRepoRedis extends AccommodationRepo {
         Accommodation accommodation = null;
         try {
             accommodation = this.convertToObjectRedis(this.getFromCache(id));
-        } catch (Exception e) {
+        }
+        catch (JedisConnectionException j_e)
+        {
+            System.out.println("Can't access cache, getting from database");
+            accommodation = super.getByID(id);
+        }
+        catch (Exception e) {
             this.putInCache(this.convertToRedisObject(super.getByID(id)));
             try {
                 accommodation = this.convertToObjectRedis(this.getFromCache(id));
