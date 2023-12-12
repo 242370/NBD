@@ -10,11 +10,11 @@ import redis.clients.jedis.exceptions.JedisConnectionException;
 
 @Getter
 public class AccommodationRepoRedis extends AccommodationRepo {
-    private AccommodationRepo repo = new AccommodationRepo();
-    private RedisInit redisInit;
-    private Jsonb jsonb;
-    private int expirationTime;
-    private String prefix = "Accommodation:";
+    private final AccommodationRepo repo = new AccommodationRepo();
+    private final RedisInit redisInit;
+    private final Jsonb jsonb;
+    private final int expirationTime;
+    private final String prefix = "Accommodation:";
 
     public AccommodationRepoRedis(int expirationTime) {
         redisInit = new RedisInit();
@@ -68,13 +68,10 @@ public class AccommodationRepoRedis extends AccommodationRepo {
         Accommodation accommodation = null;
         try {
             accommodation = this.convertToObjectRedis(this.getFromCache(id));
-        }
-        catch (JedisConnectionException j_e)
-        {
+        } catch (JedisConnectionException j_e) {
             System.out.println("Can't access cache, getting from database");
             accommodation = super.getByID(id);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             this.putInCache(this.convertToRedisObject(super.getByID(id)));
             try {
                 accommodation = this.convertToObjectRedis(this.getFromCache(id));

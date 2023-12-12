@@ -35,8 +35,7 @@ public class CashedAccommodation implements Serializable {
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "CashedAccommodation: " + '\n' +
                 "ID: " + this.id + '\n' +
                 "Destination: " + this.destination + '\n' +

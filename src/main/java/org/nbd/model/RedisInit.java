@@ -18,8 +18,7 @@ public class RedisInit {
         this.initConnection();
     }
 
-    public void initConnection()
-    {
+    public void initConnection() {
         try (InputStream input = getClass().getClassLoader().getResourceAsStream("redis_connection_props")) {
             Properties props = new Properties();
             props.load(input);

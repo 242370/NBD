@@ -24,14 +24,6 @@ public class ProgramInstance {
             Accommodation newAccommodation = repo.getByID(0);
 
             System.out.println(newAccommodation.toString());
-
-            repo.remove(0);
-
-            newAccommodation = repo.getByID(0);
-            if(newAccommodation != null)
-            {
-                System.out.println("Something went wrong");
-            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
