@@ -11,7 +11,7 @@ public class ProgramInstance {
         System.out.println("Welcome to Shark Tours!");
 
         try {
-            AccommodationRepoRedis repo = new AccommodationRepoRedis();
+            AccommodationRepoRedis repo = new AccommodationRepoRedis(900);
 
             CashedAccommodation accommodation = new CashedAccommodation(0, 3.0, 5.0, 4, "Stare Poesies");
 
@@ -23,6 +23,10 @@ public class ProgramInstance {
             CashedAccommodation newAccommodation = repo.getFromCache(0);
 
             System.out.println(newAccommodation.toString());
+
+            repo.deleteFromCache(0);
+
+            newAccommodation = repo.getFromCache(0);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

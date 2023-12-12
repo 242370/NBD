@@ -9,35 +9,39 @@ import org.nbd.model.RedisInit;
 public class AccommodationRepoRedis {
     private RedisInit redisInit;
     private Jsonb jsonb;
-    private int expirationTime = 900;
-    private String prefix = "Accommodations:";
+    private int expirationTime;
+    private String prefix = "Accommodation:";
 
-    public AccommodationRepoRedis() {
+    public AccommodationRepoRedis(int expirationTime) {
         redisInit = new RedisInit();
         jsonb = JsonbBuilder.create();
+        this.expirationTime = expirationTime;
     }
 
-    public void putInCache(CashedAccommodation accommodation)
-    {
+    public void putInCache(CashedAccommodation accommodation) {
         try {
             redisInit.getJedisPooled().jsonSet(this.prefix + accommodation.getId(), this.jsonb.toJson(accommodation));
             redisInit.getJedisPooled().expire(this.prefix + accommodation.getId(), this.expirationTime);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public CashedAccommodation getFromCache(int id) throws Exception
-    {
+    public CashedAccommodation getFromCache(int id) throws Exception {
         Object json = redisInit.getJedisPooled().jsonGet(this.prefix + id);
 
-        if(json == null)
-        {
+        if (json == null) {
             throw new Exception("No such object in cache");
         }
 
         return jsonb.fromJson(jsonb.toJson(json), CashedAccommodation.class);
+    }
+
+    public void deleteFromCache(int id) {
+        try {
+            redisInit.getJedisPooled().jsonDel(this.prefix + id);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
