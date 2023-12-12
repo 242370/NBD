@@ -4,6 +4,8 @@ import org.nbd.repos.AccommodationRepoRedis;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
 
+import java.util.concurrent.TimeUnit;
+
 @State(Scope.Benchmark)
 public class RedisBenchmarks {
     int testID1 = 0;
@@ -31,16 +33,18 @@ public class RedisBenchmarks {
 
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
-    @Warmup(iterations = 1, time = 1)
-    @Measurement(iterations = 3, time = 1)
+    @Warmup(iterations = 2, time = 1)
+    @Measurement(iterations = 3, time = 2)
+    @OutputTimeUnit(TimeUnit.MILLISECONDS)
     public void getDataFromCache(Blackhole blackhole) {
         blackhole.consume(repo.getByID(testID1));
     }
 
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
-    @Warmup(iterations = 1, time = 1)
-    @Measurement(iterations = 3, time = 1)
+    @Warmup(iterations = 2, time = 1)
+    @Measurement(iterations = 3, time = 2)
+    @OutputTimeUnit(TimeUnit.MILLISECONDS)
     public void getDataFromDatabase(Blackhole blackhole) {
         blackhole.consume(repo.getByID(testID2));
     }

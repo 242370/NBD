@@ -1,8 +1,6 @@
 package org.nbd;
 
 import org.nbd.model.Accommodation;
-import org.nbd.model.CashedAccommodation;
-import org.nbd.model.Client;
 import org.nbd.model.TravelAgency;
 import org.nbd.repos.AccommodationRepoRedis;
 
