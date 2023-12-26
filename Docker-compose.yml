@@ -1,0 +1,84 @@
+version: '3.8'
+services:
+  cassandra1:
+    image: docker.io/bitnami/cassandra:latest
+    hostname: cassandra1
+    ports:
+      - 7000:7000
+      - 9042:9042
+    volumes:
+      - cassandra1_data:/bitnami
+    networks:
+      - cassandranet
+    environment:
+      - CASSANDRA_LISTEN_ADDRESS=cassandra1
+      - CASSANDRA_BROADCAST_ADDRESS=cassandra1
+      - CASSANDRA_SEEDS=cassandra1,cassandra2,cassandra3
+      - CASSANDRA_CLUSTER_NAME=cassandra-cluster-nbd
+      - CASSANDRA_DC=dc1
+      - CASSANDRA_PASSWORD_SEEDER=yes
+      - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
+      - CASSANDRA_USER=nbd
+      - CASSANDRA_PASSWORD=nbdpassword
+    # Not working
+    #      - MAX_HEAP_SIZE=2G
+    #      - HEAP_NEWSIZE=200M
+    healthcheck:
+      test: [ "CMD-SHELL", "[ $$(nodetool statusgossip) = running ]" ]
+      interval: 30s
+      timeout: 20s
+      retries: 5
+
+  cassandra2:
+    image: docker.io/bitnami/cassandra:latest
+    hostname: cassandra2
+    ports:
+      - 7001:7000
+      - 9043:9042
+    volumes:
+      - cassandra2_data:/bitnami
+    networks:
+      - cassandranet
+    environment:
+      - CASSANDRA_LISTEN_ADDRESS=cassandra2
+      - CASSANDRA_BROADCAST_ADDRESS=cassandra2
+      - CASSANDRA_SEEDS=cassandra1,cassandra2,cassandra3
+      - CASSANDRA_CLUSTER_NAME=cassandra-cluster-nbd
+      - CASSANDRA_PASSWORD_SEEDER=yes
+      - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
+      - CASSANDRA_USER=nbd
+      - CASSANDRA_PASSWORD=nbdpassword
+    # Not working
+    #      - MAX_HEAP_SIZE=2G
+    #      - HEAP_NEWSIZE=200M
+    healthcheck:
+      test: [ "CMD-SHELL", "[ $$(nodetool statusgossip) = running ]" ]
+      interval: 30s
+      timeout: 20s
+      retries: 5
+
+#  cassandrainit:
+#    build: .
+#    image: docker.io/bitnami/cassandra:latest
+#    hostname: cassandrainit
+#    container_name: cassandrainit
+#    networks:
+#      - cassandranet
+#    depends_on:
+#      cassandra_1:
+#        condition: service_healthy
+#      cassandra_2:
+#        condition: service_healthy
+#    command: >
+#      cqlsh --user=cassandra --password=cassandra
+
+volumes:
+  cassandra1_data:
+    driver: local
+  cassandra2_data:
+    driver: local
+  cassandra3_data:
+    driver: local
+
+networks:
+  cassandranet: {}

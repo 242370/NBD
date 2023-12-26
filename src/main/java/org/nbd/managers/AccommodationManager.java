@@ -20,13 +20,13 @@ public class AccommodationManager {
         return accommodation;
     }
 
-    public void addPlace(double capacity, double pricePerPerson, int rating, String destination) throws Exception {
-        if (rating > 5 || rating < 1) {
-            throw new Exception("Incorrect rating");
-        }
-        Accommodation accommodation = new Accommodation(capacity, pricePerPerson, rating, destination);
-        this.accommodationRepo.add(accommodation);
-    }
+//    public void addPlace(double capacity, double pricePerPerson, int rating, String destination) throws Exception {
+//        if (rating > 5 || rating < 1) {
+//            throw new Exception("Incorrect rating");
+//        }
+//        Accommodation accommodation = new Accommodation(capacity, pricePerPerson, rating, destination);
+//        this.accommodationRepo.add(accommodation);
+//    }
 
     public void changePricePerPerson(int id, double newPrice) {
         this.accommodationRepo.changePricePerPerson(id, newPrice);
