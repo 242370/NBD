@@ -9,10 +9,8 @@ import org.nbd.model.Accommodation;
 @Dao
 public interface AccommodationDao {
     @Insert
-    @StatementAttributes(consistencyLevel = "One")
     void create(Accommodation accommodation);
 
     @Select
-    @StatementAttributes(consistencyLevel = "One")
     Accommodation readAccommodation(int id);
 }

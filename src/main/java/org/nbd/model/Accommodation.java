@@ -24,4 +24,20 @@ public class Accommodation {
         this.pricePerPerson = pricePerPerson;
         this.rating = rating;
     }
+
+    public double getCapacity() {
+        return capacity;
+    }
+
+    public double getPricePerPerson() {
+        return pricePerPerson;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
 }

@@ -12,13 +12,15 @@ public class ProgramInstance {
 
         try(CassandraManager cassandra = new CassandraManager())
         {
-            // TODO: ADD sample, simple object for testing
             AccommodationRepo repo = new AccommodationRepo(CassandraManager.getSession());
-            Accommodation accommodation = new Accommodation(0, "Zgierz", 5.0, 10.0, 4);
+            Accommodation accommodation = new Accommodation(1, "Zgierz", 5.0, 10.0, 4);
 
             repo.add(accommodation);
 
             System.out.println("Git");
+
+            Accommodation newa = repo.getByID(1);
+            System.out.println(newa.getDestination());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
