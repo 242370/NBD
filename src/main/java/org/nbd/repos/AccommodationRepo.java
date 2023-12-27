@@ -11,15 +11,17 @@ import org.nbd.dao.DaoMapperBuilder;
 import org.nbd.model.Accommodation;
 
 public class AccommodationRepo implements IRepo<Accommodation> {
-    private CqlSession session = CassandraManager.getSession();
+    private CqlSession session;
     private AccommodationDao dao;
 
-    public AccommodationRepo() {
+    public AccommodationRepo(CqlSession session) {
+        this.session  = session;
+
         SimpleStatement createTable = SchemaBuilder.createTable(CqlIdentifier.fromCql("Accommodation")).ifNotExists()
                 .withPartitionKey(CqlIdentifier.fromCql("id"), DataTypes.INT)
                 .withClusteringColumn(CqlIdentifier.fromCql("destination"), DataTypes.TEXT)
                 .withColumn(CqlIdentifier.fromCql("capacity"), DataTypes.DOUBLE)
-                .withColumn(CqlIdentifier.fromCql("pricePerPerson"), DataTypes.DOUBLE)
+                .withColumn(CqlIdentifier.fromCql("price_per_person"), DataTypes.DOUBLE)
                 .withColumn(CqlIdentifier.fromCql("rating"), DataTypes.INT).build();
         this.session.execute(createTable);
 

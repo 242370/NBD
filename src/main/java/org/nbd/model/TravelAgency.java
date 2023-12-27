@@ -12,7 +12,7 @@ import org.nbd.repos.TripRepo;
 public class TravelAgency {
     private double account;
     private final TransportManager transportManager = new TransportManager(new TransportRepo());
-    private final AccommodationManager accommodationManager = new AccommodationManager(new AccommodationRepo());
+    // private final AccommodationManager accommodationManager = new AccommodationManager(new AccommodationRepo());
     private final TripManager tripManager = new TripManager(new TripRepo());
 
     private final ClientManager clientManager = new ClientManager(new ClientRepo());
@@ -29,9 +29,9 @@ public class TravelAgency {
         return transportManager;
     }
 
-    public AccommodationManager getAccommodationManager() {
-        return accommodationManager;
-    }
+//    public AccommodationManager getAccommodationManager() {
+//        return accommodationManager;
+//    }
 
     public TripManager getTripManager() {
         return tripManager;

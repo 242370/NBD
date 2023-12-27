@@ -9,7 +9,7 @@ import lombok.Getter;
 
 import java.net.InetSocketAddress;
 
-public class CassandraManager {
+public class CassandraManager implements AutoCloseable{
     private static CqlSession session;
 
     public CassandraManager() {
@@ -20,13 +20,14 @@ public class CassandraManager {
         session = CqlSession.builder()
                 .addContactPoint(new InetSocketAddress("cassandra1", 9042))
                 .addContactPoint(new InetSocketAddress("cassandra2", 9043))
+                .addContactPoint(new InetSocketAddress("cassandra3", 9044))
                 .withLocalDatacenter("dc1")
                 .withAuthCredentials("nbd",
                         "nbdpassword")
-//                .withKeyspace("trips_DB")
+                 .withKeyspace("trips_DB")
                 .build();
 
-        SimpleStatement keyspace = SchemaBuilder.createKeyspace(CqlIdentifier.fromCql("trips_DB")).ifNotExists().withSimpleStrategy(2)
+        SimpleStatement keyspace = SchemaBuilder.createKeyspace(CqlIdentifier.fromCql("trips_DB")).ifNotExists().withSimpleStrategy(3)
                 .withDurableWrites(true).build();
         session.execute(keyspace);
     }
@@ -34,5 +35,10 @@ public class CassandraManager {
     public static CqlSession getSession()
     {
         return session;
+    }
+
+    @Override
+    public void close() throws Exception {
+
     }
 }
