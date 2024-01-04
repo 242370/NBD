@@ -1,9 +1,6 @@
 package org.nbd.dao;
 
-import com.datastax.oss.driver.api.mapper.annotations.Dao;
-import com.datastax.oss.driver.api.mapper.annotations.Insert;
-import com.datastax.oss.driver.api.mapper.annotations.Select;
-import com.datastax.oss.driver.api.mapper.annotations.StatementAttributes;
+import com.datastax.oss.driver.api.mapper.annotations.*;
 import org.nbd.model.Accommodation;
 
 @Dao
@@ -12,5 +9,8 @@ public interface AccommodationDao {
     void create(Accommodation accommodation);
 
     @Select
-    Accommodation readAccommodation(int id);
+    Accommodation read(int id);
+
+    @Delete
+    void delete(Accommodation accommodation);
 }

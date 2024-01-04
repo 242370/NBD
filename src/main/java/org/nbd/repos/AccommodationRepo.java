@@ -38,7 +38,7 @@ public class AccommodationRepo implements IRepo<Accommodation> {
         if (id < 1) {
             throw new Exception("Id cannot be below 1");
         }
-        return this.dao.readAccommodation(id);
+        return this.dao.read(id);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class AccommodationRepo implements IRepo<Accommodation> {
         if (id < 1) {
             throw new Exception("Id cannot be below 1");
         }
-        // TODO: implementation
+        this.dao.delete(this.getByID(id));
     }
 
     public long getSize() {

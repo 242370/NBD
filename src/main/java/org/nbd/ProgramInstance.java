@@ -20,6 +20,10 @@ public class ProgramInstance {
             Accommodation newa = repo.getByID(1);
             System.out.println(newa.getDestination());
             // TODO: application.conf to resources
+
+            repo.remove(1);
+            newa = repo.getByID(1);
+            System.out.println(newa.getDestination());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
