@@ -6,6 +6,6 @@ import org.nbd.model.Client;
 
 @Dao
 public interface ClientDao {
-//    @Insert
-//    void create(Client client);
+    @Insert
+    void create(Client client);
 }

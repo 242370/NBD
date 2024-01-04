@@ -1,45 +1,32 @@
 package org.nbd.model;
 
+import com.datastax.oss.driver.api.mapper.annotations.*;
+import com.datastax.oss.driver.api.mapper.entity.naming.GetterStyle;
+import com.datastax.oss.driver.api.mapper.entity.naming.NamingConvention;
+import com.datastax.oss.driver.api.mapper.entity.naming.SetterStyle;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity(defaultKeyspace = "trips_DB")
+@CqlName("Client")
+@PropertyStrategy(mutable = true,
+        getterStyle = GetterStyle.JAVABEANS,
+        setterStyle = SetterStyle.JAVABEANS)
+@NamingStrategy(convention = NamingConvention.EXACT_CASE)
 public class Client {
-    private String firstName;
-    private String lastName;
+    @PartitionKey
+    private int id;
+    @ClusteringColumn
+    private String lastname;
+    private String firstname;
+
     private int weight;
-    private boolean hasPet = false;
-    private Pet pet;
-
-    public Client(String firstName, String lastName, int weight) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.weight = weight;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public int getWeight() {
-        if (this.hasPet) {
-            return this.weight + this.pet.getPetWeight();
-        }
-        return this.weight;
-    }
-
-    public boolean hasPet() {
-        return hasPet;
-    }
-
-    public Pet getPet() {
-        return this.pet;
-    }
-
-    public void addPet(String name, String species, int weight) {
-        Pet newPet = new Pet(name, species, weight);
-        this.hasPet = true;
-        this.pet = newPet;
-    }
+    private boolean haspet;
+    private int tripid;
 }
