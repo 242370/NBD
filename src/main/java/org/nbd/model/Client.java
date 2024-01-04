@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
+
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,4 +29,28 @@ public class Client {
     private int weight;
     private boolean haspet;
     private int tripid;
+
+    public int getId() {
+        return id;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public boolean isHaspet() {
+        return haspet;
+    }
+
+    public int getTripid() {
+        return tripid;
+    }
 }

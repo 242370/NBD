@@ -38,6 +38,13 @@ public class ProgramInstance {
             crepo.add(client);
             System.out.println("Client git");
 
+            Client newc = crepo.getByID(1);
+            System.out.println(newc.getLastname());
+
+            crepo.remove(1);
+            newc = crepo.getByID(1);
+            System.out.println(newc.getLastname());
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
