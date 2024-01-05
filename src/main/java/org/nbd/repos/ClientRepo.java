@@ -45,7 +45,7 @@ public class ClientRepo implements IRepo<Client> {
         if (id < 1) {
             throw new Exception("Id cannot be below 1");
         }
-        this.dao.delete(this.dao.read(id));
+        this.dao.delete(this.getByID(id));
     }
 
     @Override
@@ -53,8 +53,7 @@ public class ClientRepo implements IRepo<Client> {
         return 0;
     }
 
-    public void update(Client client)
-    {
+    public void update(Client client) {
         this.dao.update(client);
     }
 }
