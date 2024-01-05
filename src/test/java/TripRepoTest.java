@@ -62,4 +62,26 @@ public class TripRepoTest {
         assertNotNull(newTrip);
         assertEquals(initialClients + 1, newTrip.getClients());
     }
+
+    @Test
+    void createAndDeleteByTest()
+    {
+        repo.addBy(this.testTrip);
+
+        Trip newTrip = repo.selectBy(this.testAccommodation).getFirst();
+        assertNotNull(newTrip);
+        assertEquals(this.testAccommodation, newTrip.getAccommodation());
+        assertEquals(this.testID, newTrip.getId());
+
+        repo.deleteBy(this.testAccommodation);
+        try {
+            newTrip = repo.selectBy(this.testAccommodation).getFirst();
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            newTrip = null;
+        }
+        assertNull(newTrip);
+    }
 }
