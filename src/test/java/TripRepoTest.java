@@ -15,20 +15,51 @@ public class TripRepoTest {
     int testTransportmean = 1;
     int testAccommodation = 1;
     Trip testTrip = new Trip(testID, testLength, testName, initialClients, testTransportmean, testAccommodation);
+
     @Test
-    void createAndDeleteTest()
-    {
+    void createAndDeleteTest() {
         repo.add(this.testTrip);
 
         Trip newTrip = null;
         try {
             newTrip = repo.getByID(testID);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         assertNotNull(newTrip);
         assertEquals(testLength, newTrip.getLength());
+        assertEquals(testName, newTrip.getName());
+
+        try {
+            repo.remove(testID);
+            newTrip = repo.getByID(testID);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        assertNull(newTrip);
+    }
+
+    @Test
+    void updateTest() {
+        repo.add(this.testTrip);
+
+        Trip newTrip = null;
+        try {
+            newTrip = repo.getByID(testID);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        assertNotNull(newTrip);
+        assertEquals(testLength, newTrip.getLength());
+        assertEquals(testName, newTrip.getName());
+
+        try {
+            repo.addClientToTrip(newTrip);
+            newTrip = repo.getByID(testID);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        assertNotNull(newTrip);
+        assertEquals(initialClients + 1, newTrip.getClients());
     }
 }
