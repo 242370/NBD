@@ -1,66 +1,31 @@
 package org.nbd.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.datastax.oss.driver.api.mapper.annotations.*;
+import com.datastax.oss.driver.api.mapper.entity.naming.GetterStyle;
+import com.datastax.oss.driver.api.mapper.entity.naming.NamingConvention;
+import com.datastax.oss.driver.api.mapper.entity.naming.SetterStyle;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity(defaultKeyspace = "trips_DB")
+@CqlName("Trip")
+@PropertyStrategy(mutable = true,
+        getterStyle = GetterStyle.JAVABEANS,
+        setterStyle = SetterStyle.JAVABEANS)
+@NamingStrategy(convention = NamingConvention.EXACT_CASE)
 public class Trip {
+    @PartitionKey
+    private int id;
     private int length;
+    @ClusteringColumn
     private String name;
-    private int actualWeight = 0;
-
-    private List<Client> clients = new ArrayList<>();
-    TransportMean transportMean;
-    Accommodation accommodation;
-
-    public Trip(int length, String name, TransportMean transportMean, Accommodation accommodation) {
-        this.length = length;
-        this.name = name;
-        this.transportMean = transportMean;
-        this.accommodation = accommodation;
-    }
-
-    public int getLength() {
-        return length;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getActualWeight() {
-        return actualWeight;
-    }
-
-    public TransportMean getTransportMean() {
-        return transportMean;
-    }
-
-    public Accommodation getAccommodation() {
-        return accommodation;
-    }
-
-    public Client getClient(int index) {
-        return clients.get(index);
-    }
-
-    public int getNumberOfClients() {
-        return clients.size();
-    }
-
-    public double calculateCost() {
-        return clients.size() * accommodation.getPricePerPerson();
-    }
-
-    public boolean addClient(Client customer) throws Exception {
-
-        if (clients.size() + 1 > this.accommodation.getCapacity()) {
-            throw new Exception("Capacity not enough");
-        }
-
-        if (this.actualWeight + customer.getWeight() > this.transportMean.getMaxWeight()) {
-            throw new Exception("Weight too much");
-        }
-        this.actualWeight += customer.getWeight();
-        return clients.add(customer);
-    }
+    private int clients;
+    private int transportmean;
+    private int accommodation;
 }

@@ -13,4 +13,7 @@ public interface DaoMapper {
 
     @DaoFactory
     AccommodationDao getAccommodationDao(@DaoKeyspace CqlIdentifier keyspace);
+
+    @DaoFactory
+    TripDao getTripDao(@DaoKeyspace CqlIdentifier keyspace);
 }
