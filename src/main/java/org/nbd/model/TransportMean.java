@@ -1,31 +1,21 @@
 package org.nbd.model;
 
+import com.datastax.oss.driver.api.mapper.annotations.ClusteringColumn;
+import com.datastax.oss.driver.api.mapper.annotations.PartitionKey;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public abstract class TransportMean {
-    private boolean isAvailable = true;
-    private final int maxWeight;
-
-    @Getter
+    @PartitionKey
     private String type;
-
-
-    public TransportMean(int maxWeight) {
-        this.maxWeight = maxWeight;
-    }
-
-    public boolean isAvailable() {
-        return isAvailable;
-    }
-
-    public int getMaxWeight() {
-        return maxWeight;
-    }
-
-
-    public void setAvailable(boolean available) {
-        isAvailable = available;
-    }
-
-    public abstract boolean isPetSupportive();
+    @ClusteringColumn
+    private int id;
+    private boolean isavailable;
+    private int maxweight;
 }

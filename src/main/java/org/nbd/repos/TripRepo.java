@@ -12,7 +12,6 @@ import com.datastax.oss.driver.api.querybuilder.relation.Relation;
 import org.nbd.dao.DaoMapper;
 import org.nbd.dao.DaoMapperBuilder;
 import org.nbd.dao.TripDao;
-import org.nbd.model.Client;
 import org.nbd.model.Trip;
 
 import java.util.ArrayList;
