@@ -1,5 +1,6 @@
 package org.nbd.kafka;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
@@ -8,7 +9,10 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.IntegerSerializer;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.nbd.model.Accommodation;
 import org.nbd.model.Client;
+import org.nbd.model.Jet;
+import org.nbd.model.Trip;
 
 import java.util.Properties;
 
@@ -38,18 +42,34 @@ public class Producer {
         return new KafkaProducer<>(producerProps);
     }
 
-    public static void main(String[] args) {
-        Producer producer = new Producer();
-        Client client = new Client(1, "Rafal", "Cyberbully", 50);
-
-        for(int i = 0 ; i < 10 ; i++)
-        {
-            String message = "Message: " + i;
-            ProducerRecord<String, String> record = new ProducerRecord<>(KafkaManager.topic, message);
-            producer.producer.send(record);
-            System.out.println(record);
+    public void produce(Trip trip)
+    {
+        String tripToString = null;
+        try {
+            tripToString = this.mapper.writeValueAsString(trip);
+        } catch (JsonProcessingException e) {
+            System.out.println(e.getMessage());
+            return;
         }
 
-        producer.producer.close();
+        ProducerRecord<String, String> record = new ProducerRecord<>(KafkaManager.topic, tripToString);
+        this.producer.send(record);
+    }
+
+    public void close()
+    {
+        this.producer.close();
+    }
+
+    public static void main(String[] args) {
+        Producer producer = new Producer();
+
+        Accommodation accommodation = new Accommodation(1, 5.0, 10.0, 4, "Zgierz");
+        Jet jet = new Jet(1, 100);
+        Trip trip = new Trip(1, 7, "Akacje pod Gruszą", jet, accommodation);
+
+        producer.produce(trip);
+
+        producer.close();
     }
 }
