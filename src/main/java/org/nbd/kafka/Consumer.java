@@ -12,7 +12,7 @@ import java.util.Properties;
 
 public class Consumer {
     private KafkaConsumer<String, String> consumer;
-    private TripRepo repo = new TripRepo();
+    private TripRepo repo = null;
     private ObjectMapper mapper = new ObjectMapper();
 
     public Consumer(String topic) {
@@ -33,13 +33,17 @@ public class Consumer {
         return consumer;
     }
 
+    public void read() {
+        ConsumerRecords<String, String> records = this.consumer.poll(0);
+
+        records.forEach(record -> System.out.println("Received on thread " + Thread.currentThread().getId() + " " + record.value()));
+    }
+
     public static void main(String[] args) {
-        Consumer consumer = new Consumer(KafkaManager.topic);
-
-        while (true) {
-            ConsumerRecords<String, String> records = consumer.consumer.poll(0);
-
-            records.forEach(record -> System.out.println("Received: " + record.value()));
+        for (int i = 0; i < 2; i++) {
+            ConsumerThread consumerThread = new ConsumerThread();
+            Thread thread = new Thread(consumerThread);
+            thread.start();
         }
     }
 }
