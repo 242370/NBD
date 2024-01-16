@@ -1,10 +1,12 @@
 package org.nbd.kafka;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.nbd.model.Trip;
 import org.nbd.repos.TripRepo;
 
 import java.util.Collections;
@@ -12,8 +14,8 @@ import java.util.Properties;
 
 public class Consumer {
     private KafkaConsumer<String, String> consumer;
-    private TripRepo repo = null;
     private ObjectMapper mapper = new ObjectMapper();
+    private Class trip = Trip.class;
 
     public Consumer(String topic) {
         this.consumer = this.initConsumer(topic);
@@ -36,10 +38,22 @@ public class Consumer {
     public void read() {
         ConsumerRecords<String, String> records = this.consumer.poll(0);
 
-        records.forEach(record -> System.out.println("Received on thread " + Thread.currentThread().getId() + " " + record.value()));
+        records.forEach(record ->
+        {
+            System.out.println("Received on thread " + Thread.currentThread().getId() + " " + record.value());
+
+            try {
+                Trip newTrip = this.mapper.readValue(record.value(), Trip.class);
+                System.out.println(newTrip.getName());
+            } catch (JsonProcessingException e) {
+                System.out.println(e.getMessage());
+            }
+        });
     }
 
     public static void main(String[] args) {
+        TripRepo repo = new TripRepo();
+
         for (int i = 0; i < 2; i++) {
             ConsumerThread consumerThread = new ConsumerThread();
             Thread thread = new Thread(consumerThread);

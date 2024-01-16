@@ -12,3 +12,6 @@ kafka-console-consumer.sh --topic trips --from-beginning --bootstrap-server kafk
 
 -- Odczytanie z konkretnej partycji i z wyznaczonym offsetem
 kafka-console-consumer.sh --topic testTopic --partition 0 --offset 1 --bootstrap-server kafka2:19292
+
+-- Sprawdzenie konsumentów
+kafka-consumer-groups.sh --bootstrap-server kafka1:19192 --describe --group consumers
