@@ -64,7 +64,7 @@ public class Producer {
     public static void main(String[] args) {
         Producer producer = new Producer();
 
-        Accommodation accommodation = new Accommodation(1, 5.0, 10.0, 4, "Zgierz");
+        Accommodation accommodation = new Accommodation(KafkaManager.id, 5.0, 10.0, 4, "Zgierz");
 
         producer.produce(accommodation);
 

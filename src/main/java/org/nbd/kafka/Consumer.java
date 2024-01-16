@@ -8,6 +8,7 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.nbd.model.Accommodation;
 import org.nbd.model.Trip;
+import org.nbd.repos.AccommodationRepo;
 import org.nbd.repos.TripRepo;
 
 import java.util.Collections;
@@ -16,7 +17,6 @@ import java.util.Properties;
 public class Consumer {
     private KafkaConsumer<String, String> consumer;
     private ObjectMapper mapper = new ObjectMapper();
-    private Class trip = Trip.class;
 
     public Consumer(String topic) {
         this.consumer = this.initConsumer(topic);
@@ -45,7 +45,10 @@ public class Consumer {
 
             try {
                 Accommodation newAccommodation = this.mapper.readValue(record.value(), Accommodation.class);
-                System.out.println(newAccommodation.toString());
+
+                KafkaManager.repo.add(newAccommodation);
+                System.out.println(KafkaManager.repo.getByID(KafkaManager.id).toString());
+                KafkaManager.repo.remove(KafkaManager.id);
             } catch (JsonProcessingException e) {
                 System.out.println(e.getMessage());
             }
@@ -53,8 +56,6 @@ public class Consumer {
     }
 
     public static void main(String[] args) {
-        TripRepo repo = new TripRepo();
-
         for (int i = 0; i < 2; i++) {
             ConsumerThread consumerThread = new ConsumerThread();
             Thread thread = new Thread(consumerThread);
