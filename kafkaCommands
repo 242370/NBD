@@ -1,0 +1,14 @@
+-- Tworzenie tematu (tworzy się automatycznie i tak)
+kafka-topics.sh --create --topic Trips --partitions 5 --replication-factor 3 --bootstrap-server kafka1:19192
+
+-- Sprawdzanie rozłożenia tematu
+kafka-topics.sh --describe --topic Trips --bootstrap-server kafka1:19192
+
+-- Wyznaczenie producenta
+kafka-console-producer.sh --topic Trips --bootstrap-server kafka1:19192
+
+-- Wyznaczenie konsumenta od początku
+kafka-console-consumer.sh --topic Trips --from-beginning --bootstrap-server kafka2:19292
+
+-- Odczytanie z konkretnej partycji i z wyznaczonym offsetem
+kafka-console-consumer.sh --topic testTopic --partition 0 --offset 1 --bootstrap-server kafka2:19292
