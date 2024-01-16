@@ -10,6 +10,5 @@ public class ConsumerThread implements Runnable{
         {
             consumer.read();
         }
-
     }
 }

@@ -47,12 +47,19 @@ public class Consumer {
                 Accommodation newAccommodation = this.mapper.readValue(record.value(), Accommodation.class);
 
                 KafkaManager.repo.add(newAccommodation);
-                System.out.println(KafkaManager.repo.getByID(KafkaManager.id).toString());
-                KafkaManager.repo.remove(KafkaManager.id);
+                System.out.println(KafkaManager.repo.getByID(newAccommodation.getId()).toString());
+                KafkaManager.repo.remove(newAccommodation.getId());
             } catch (JsonProcessingException e) {
                 System.out.println(e.getMessage());
             }
+
+            this.consumer.commitAsync();
         });
+    }
+
+    public void close()
+    {
+        this.consumer.close();
     }
 
     public static void main(String[] args) {

@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.serialization.IntegerSerializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.nbd.model.Accommodation;
@@ -15,7 +16,10 @@ import org.nbd.model.Client;
 import org.nbd.model.Jet;
 import org.nbd.model.Trip;
 
+import java.util.ArrayList;
 import java.util.Properties;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 public class Producer {
     private KafkaProducer<String, String> producer;
@@ -26,8 +30,7 @@ public class Producer {
         this.mapper = new ObjectMapper();
     }
 
-    public KafkaProducer<String, String> initProducer()
-    {
+    public KafkaProducer<String, String> initProducer() {
         Properties producerProps = new Properties();
         producerProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
                 "kafka1:9192,kafka2:9292,kafka3:9392");
@@ -37,36 +40,42 @@ public class Producer {
                 StringSerializer.class);
         producerProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
                 StringSerializer.class);
-        producerProps.put(ProducerConfig.ACKS_CONFIG, "0");
+        producerProps.put(ProducerConfig.ACKS_CONFIG, "all");
+        producerProps.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, true);
 
         return new KafkaProducer<>(producerProps);
     }
 
-    public void produce(Accommodation accommodation)
-    {
-        String tripToString = null;
+    public void produce(Accommodation accommodation) {
+        String accommodationToString = null;
         try {
-            tripToString = this.mapper.writeValueAsString(accommodation);
-        } catch (JsonProcessingException e) {
-            System.out.println(e.getMessage());
-            return;
-        }
+            accommodationToString = this.mapper.writeValueAsString(accommodation);
 
-        ProducerRecord<String, String> record = new ProducerRecord<>(KafkaManager.topic, tripToString);
-        this.producer.send(record);
+            ProducerRecord<String, String> record = new ProducerRecord<>(KafkaManager.topic, accommodationToString);
+
+            Future<RecordMetadata> sent = this.producer.send(record);
+            RecordMetadata recordMetadata = sent.get();
+        } catch (JsonProcessingException | ExecutionException | InterruptedException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
-    public void close()
-    {
+    public void close() {
         this.producer.close();
     }
 
     public static void main(String[] args) {
         Producer producer = new Producer();
 
-        Accommodation accommodation = new Accommodation(KafkaManager.id, 5.0, 10.0, 4, "Zgierz");
+        for (int i = 100; i < 106; i++) {
+            Accommodation accommodation = new Accommodation(i, 5.0, 10.0, 4, "Zgierz");
+            producer.produce(accommodation);
 
-        producer.produce(accommodation);
+        }
+
+//        Accommodation accommodation = new Accommodation(KafkaManager.id, 5.0, 10.0, 4, "Zgierz");
+//
+//        producer.produce(accommodation);
 
         producer.close();
     }
