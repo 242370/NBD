@@ -6,6 +6,7 @@ import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.nbd.model.Accommodation;
 import org.nbd.model.Trip;
 import org.nbd.repos.TripRepo;
 
@@ -43,8 +44,8 @@ public class Consumer {
             System.out.println("Received on thread " + Thread.currentThread().getId() + " " + record.value());
 
             try {
-                Trip newTrip = this.mapper.readValue(record.value(), Trip.class);
-                System.out.println(newTrip.getName());
+                Accommodation newAccommodation = this.mapper.readValue(record.value(), Accommodation.class);
+                System.out.println(newAccommodation.toString());
             } catch (JsonProcessingException e) {
                 System.out.println(e.getMessage());
             }

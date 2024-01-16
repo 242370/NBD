@@ -20,7 +20,6 @@ import java.util.Properties;
 public class Producer {
     private KafkaProducer<String, String> producer;
     private ObjectMapper mapper;
-    private PolymorphicTypeValidator validator;
 
     public Producer() {
         this.producer = this.initProducer();
@@ -43,11 +42,11 @@ public class Producer {
         return new KafkaProducer<>(producerProps);
     }
 
-    public void produce(Trip trip)
+    public void produce(Accommodation accommodation)
     {
         String tripToString = null;
         try {
-            tripToString = this.mapper.writeValueAsString(trip);
+            tripToString = this.mapper.writeValueAsString(accommodation);
         } catch (JsonProcessingException e) {
             System.out.println(e.getMessage());
             return;
@@ -66,10 +65,8 @@ public class Producer {
         Producer producer = new Producer();
 
         Accommodation accommodation = new Accommodation(1, 5.0, 10.0, 4, "Zgierz");
-        Jet jet = new Jet(1, 100);
-        Trip trip = new Trip(1, 7, "Akacje pod Gruszą", jet, accommodation);
 
-        producer.produce(trip);
+        producer.produce(accommodation);
 
         producer.close();
     }

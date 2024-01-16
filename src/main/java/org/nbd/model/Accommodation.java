@@ -10,9 +10,9 @@ import java.io.Serializable;
 @Getter
 public class Accommodation implements Serializable {
     @BsonProperty("id")
-    private final int id;
+    private int id;
     @BsonProperty("capacity")
-    private final double capacity;
+    private double capacity;
     @Setter
     @BsonProperty("pricePerPerson")
     private double pricePerPerson;
@@ -20,7 +20,7 @@ public class Accommodation implements Serializable {
     @BsonProperty("rating")
     private int rating;
     @BsonProperty("destination")
-    private final String destination;
+    private String destination;
 
     @BsonCreator
     public Accommodation(@BsonProperty("id") int id, @BsonProperty("capacity") double capacity,
@@ -31,6 +31,10 @@ public class Accommodation implements Serializable {
         this.pricePerPerson = pricePerPerson;
         this.rating = rating;
         this.destination = destination;
+    }
+
+    public Accommodation() {
+
     }
 
     @Override
