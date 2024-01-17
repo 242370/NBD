@@ -79,11 +79,6 @@ public class Producer {
             }
             producer.produce(accommodation);
         }
-
-//        Accommodation accommodation = new Accommodation(KafkaManager.id, 5.0, 10.0, 4, "Zgierz");
-//
-//        producer.produce(accommodation);
-
-        producer.close();
+//        producer.close();
     }
 }

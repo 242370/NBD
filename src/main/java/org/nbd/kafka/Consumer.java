@@ -27,6 +27,8 @@ public class Consumer {
 
         consumerProps.put(ConsumerConfig.GROUP_ID_CONFIG, KafkaManager.consumers);
         consumerProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "kafka1:9192,kafka2:9292,kafka3:9392");
+        consumerProps.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG,
+                false);
         consumerProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         consumerProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
 
@@ -41,11 +43,10 @@ public class Consumer {
 
         records.forEach(record ->
         {
-            System.out.println("Received on thread " + Thread.currentThread().getId() + " " + record.value());
-
             try {
                 Accommodation newAccommodation = this.mapper.readValue(record.value(), Accommodation.class);
 
+                System.out.println("Partition: " + record.partition());
                 KafkaManager.repo.add(newAccommodation);
                 System.out.println(KafkaManager.repo.getByID(newAccommodation.getId()).toString());
                 KafkaManager.repo.remove(newAccommodation.getId());
