@@ -51,7 +51,7 @@ public class Producer {
         try {
             accommodationToString = this.mapper.writeValueAsString(accommodation);
 
-            ProducerRecord<String, String> record = new ProducerRecord<>(KafkaManager.topic, accommodationToString);
+            ProducerRecord<String, String> record = new ProducerRecord<>(KafkaManager.topic, accommodation.getDestination(), accommodationToString);
 
             Future<RecordMetadata> sent = this.producer.send(record);
             RecordMetadata recordMetadata = sent.get();
@@ -68,9 +68,16 @@ public class Producer {
         Producer producer = new Producer();
 
         for (int i = 100; i < 106; i++) {
-            Accommodation accommodation = new Accommodation(i, 5.0, 10.0, 4, "Zgierz");
+            Accommodation accommodation = null;
+            if(i % 2 == 0)
+            {
+                accommodation = new Accommodation(i, 5.0, 10.0, 4, "Zgierz");
+            }
+            else
+            {
+                accommodation = new Accommodation(i, 5.0, 10.0, 4, "Sosnowiec");
+            }
             producer.produce(accommodation);
-
         }
 
 //        Accommodation accommodation = new Accommodation(KafkaManager.id, 5.0, 10.0, 4, "Zgierz");
